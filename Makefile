@@ -2,7 +2,7 @@
 #----------------------------------EXEC_NAME-------------------------------------------#
 ########################################################################################
 
-NAME		:= philo
+NAME		:= cub3d
 
 ########################################################################################
 #-------------------------------COMPILER_OPTION----------------------------------------#
@@ -15,9 +15,8 @@ CFLAGS		:=	-g -fsanitize=address -Wall -Wextra -Werror
 #------------------------------SOURCE+OBJECT_FILE--------------------------------------#
 ########################################################################################
 
-SRC			:=	main.c ft_init_philo.c ft_create_thread.c \
-				ft_free_destroy.c ft_thread_routine.c \
-				ft_philo_utils.c
+SRC			:=	main.c draw_on_screen.c get_wall_distance.c fill_img.c \
+				event_hook_routine.c vector_utils.c \
 
 SRCS		:= $(addprefix ./srcs/, $(SRC))
 OBJ 		:= $(SRCS:.c=.o)
@@ -26,14 +25,14 @@ OBJ 		:= $(SRCS:.c=.o)
 #---------------------------------HEADER_FILE------------------------------------------#
 ########################################################################################
 
-INC			:= philosopher.h
+INC			:= cub3d.h
 INCS		:= $(addprefix ./includes/, $(INC))
 
 ########################################################################################
 #-----------------------------------LIB_VAR--------------------------------------------#
 ########################################################################################
 
-LIBPATH 	:= ../libft/
+LIBPATH 	:= ./libft/
 LIBNAME 	:= $(LIBPATH)libft.a
 
 ########################################################################################
@@ -94,7 +93,7 @@ define progress_bar_2
 	@if [ $(PROG_BAR_INIT) -eq 0 ]; then printf "\n$(RED)$(shell for i in {1..$(LINE_COUNT)}; do printf '%%s\\n'; done)\n\n" $(LINES); fi
 	@printf "\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\033[A\r";
 	@printf "$(GREEN)$(shell for i in $(LINE_SIZES); do printf '%%.%ds\\n' $$(($$i*$(1)/$(TOTAL_FILES))); done) \n%d/%d\n" $(LINES) $(1) $(TOTAL_FILES)
-	@if [ $(1) -eq $(TOTAL_FILES) ]; then echo "$(RED_BOLD)\t\t\tPhilo ready!\n"; fi
+	@if [ $(1) -eq $(TOTAL_FILES) ]; then echo "$(RED_BOLD)\t\t\tcub3d ready!\n"; fi
 	@printf "$(SET_CURSOR)$(WHITE)"
 endef
 
@@ -104,10 +103,10 @@ endef
 
 all: $(NAME)
 
-bonus: $(NAME_bonus)
+bonus: $(NAME)
 
 $(NAME): $(LIBNAME) $(OBJ)
-	@$(COMP) $(CFLAGS) $(OBJ) -o $@ -L $(LIBPATH) -lft
+	@$(COMP) $(CFLAGS) $(OBJ) -o $@ -L $(LIBPATH) -lft -lmlx -framework OpenGL -framework AppKit -lm
 
 $(LIBNAME):
 	@make -C $(LIBPATH) all
@@ -130,4 +129,4 @@ fclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
