@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/22 16:01:19 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:56:25 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
-# include <mlx.h>
+// # include <mlx.h>
 
 # include "../libft/includes/libft.h"
 
@@ -26,14 +26,20 @@
 # define WIN_SIZE_X 1000
 # define WIN_SIZE_Y 1000
 # define PIXEL_SIZE 1
+
 # define PLAYER_POS_X 1.5
 # define PLAYER_POS_Y 1.5
 # define PLAYER_DIR_X -1
 # define PLAYER_DIR_Y 0
+
 # define FOV_X 1.57
 # define FOV_Y 1.57
+
 # define PLAYER_HEIGHT 1.0
 # define WALL_HEIGHT 2.0
+
+# define TEXTURE_SIZE_X 64
+# define TEXTURE_SIZE_Y 64
 
 # define ROTATE_STEP 0.2
 # define TRANSLATION_STEP 0.1

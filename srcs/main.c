@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:34:11 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/22 16:01:05 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:57:07 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,16 @@ static int	init_data(t_data *dt, char *file_path)
 	dt->pl.dir = vec_assignation(PLAYER_DIR_X, PLAYER_DIR_Y);
 	dt->tex.floor = 0x00000000;
 	dt->tex.ceiling = 0x00ffffff;
-	dt->tex.north.tab = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/bookshelf.xpm", 64, 64);
+	dt->tex.north.tab = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/bookshelf.xpm", TEXTURE_SIZE_X, TEXTURE_SIZE_Y);
 	if (dt->tex.north.tab == NULL)
 		return (STOP_FAILURE);
-	dt->tex.east.tab = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/bookshelf.xpm", 64, 64);
+	dt->tex.east.tab = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/bookshelf.xpm", TEXTURE_SIZE_X, TEXTURE_SIZE_Y);
 	if (dt->tex.east.tab == NULL)
 		return (STOP_FAILURE);
-	dt->tex.south.tab = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/bookshelf.xpm", 64, 64);
+	dt->tex.south.tab = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/bookshelf.xpm", TEXTURE_SIZE_X, TEXTURE_SIZE_Y);
 	if (dt->tex.south.tab == NULL)
 		return (STOP_FAILURE);
-	dt->tex.west.tab = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/bookshelf.xpm", 64, 64);
+	dt->tex.west.tab = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/bookshelf.xpm", TEXTURE_SIZE_X, TEXTURE_SIZE_Y);
 	if (dt->tex.west.tab == NULL)
 		return (STOP_FAILURE);
 	dt->tex.north.addr = mlx_get_data_addr(dt->mlx.ptr, &dt->tex.north.bit_per_pix, &dt->tex.north.line_len, &dt->tex.north.endian);
