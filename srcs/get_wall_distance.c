@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:02:22 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/22 14:52:50 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:03:13 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static double	set_wall_distance(t_vector next_side_dist, t_vector delta_dist,
 	int wall_dir)
 {
 	if (wall_dir == WEST || wall_dir == EAST)
-		return (next_side_dist.x - delta_dist.x);
-	return (next_side_dist.y - delta_dist.y);
+		return (next_side_dist.y - delta_dist.y);
+	return (next_side_dist.x - delta_dist.x);
 }
 
 double	get_wall_distance(t_data dt, t_vector ray, int *wall_dir)
@@ -48,8 +48,8 @@ double	get_wall_distance(t_data dt, t_vector ray, int *wall_dir)
 	t_vector	next_side_dist;
 	t_vector	delta_dist;
 
-	wall_index = (int[2]){(int)dt.pl.pos.x, (int)dt.pl.pos.y};
-	index_step = (int[2]){1 - 2 * (ray.x < 0), 1 - 2 * (ray.y < 0)};
+	wall_index = (int [2]){(int)dt.pl.pos.x, (int)dt.pl.pos.y};
+	index_step = (int [2]){1 - 2 * (ray.x < 0), 1 - 2 * (ray.y < 0)};
 	init_side_dist(dt.pl.pos, ray, &next_side_dist, &delta_dist);
 	while (true)
 	{
@@ -57,13 +57,13 @@ double	get_wall_distance(t_data dt, t_vector ray, int *wall_dir)
 		{
 			next_side_dist.x += delta_dist.x;
 			wall_index[0] += index_step[0];
-			*wall_dir = 2 + (index_step[0] == -1);
+			*wall_dir = (index_step[0] == -1);
 		}
 		else
 		{
 			next_side_dist.y += delta_dist.y;
 			wall_index[1] += index_step[1];
-			*wall_dir = (index_step[1] == 1);
+			*wall_dir = 2 + (index_step[1] == -1);
 		}
 		if (dt.map[wall_index[0]][wall_index[1]] == 1)
 			return (set_wall_distance(next_side_dist, delta_dist, *wall_dir));
