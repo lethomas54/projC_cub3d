@@ -17,7 +17,8 @@ CFLAGS		:=	-g -fsanitize=address -Wall -Wextra -Werror
 ########################################################################################
 
 SRC			:=	main.c draw_on_screen.c get_wall_distance.c fill_img.c \
-				fill_with_texture.c event_hook_routine.c vector_utils.c
+				fill_with_texture.c event_hook_routine.c vector_utils.c \
+				init_data.c init_colors.c init_map.c
 
 SRCS		:= $(addprefix ./srcs/, $(SRC))
 OBJ 		:= $(SRCS:.c=.o)

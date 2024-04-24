@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/24 11:13:10 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:07:29 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <mlx.h>
+# include <fcntl.h>
 
 # include "../libft/includes/libft.h"
 
@@ -30,7 +31,7 @@
 # define PLAYER_POS_X 1.5
 # define PLAYER_POS_Y 1.5
 # define PLAYER_DIR_X 0
-# define PLAYER_DIR_Y 1
+# define PLAYER_DIR_Y -1
 
 # define FOV_X 1.57
 # define FOV_Y 1.57
@@ -122,5 +123,11 @@ void		free_tab(int **tab);
 t_vector	vec_assignation(double x, double y);
 t_vector	vec_normalization(t_vector vec_to_norm);
 t_vector	vec_rotate(t_vector vec_to_rot, double rot_step);
+
+int			init_textures(t_data *dt, int fd);
+char		*get_next_true_line(int fd, t_bool trim);
+void		ft_free_split(char **split);
+int			init_colors_floor_ceiling(t_data *dt, int fd);
+int			init_map_and_player(t_data *dt, int fd);
 
 #endif
