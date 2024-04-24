@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 09:51:47 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/24 10:57:54 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:00:12 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 // 	}
 // }
 
-static double	get_corner_distance(t_vector pos, t_vector ray, //manage texture on several walls
+static double	get_corner_distance(t_vector pos, t_vector ray,
 	double wall_dist, int wall_dir)
 {
 	t_vector	hit_pos;

@@ -3,6 +3,7 @@
 ########################################################################################
 
 NAME		:= cub3d
+NAME_BONUS	:= cub3d_bonus
 
 ########################################################################################
 #-------------------------------COMPILER_OPTION----------------------------------------#
@@ -16,10 +17,17 @@ CFLAGS		:=	-g -fsanitize=address -Wall -Wextra -Werror
 ########################################################################################
 
 SRC			:=	main.c draw_on_screen.c get_wall_distance.c fill_img.c \
-				fill_with_texture.c event_hook_routine.c vector_utils.c \
+				fill_with_texture.c event_hook_routine.c vector_utils.c
 
 SRCS		:= $(addprefix ./srcs/, $(SRC))
 OBJ 		:= $(SRCS:.c=.o)
+
+SRC_BONUS	:=	main_bonus.c draw_on_screen_bonus.c get_wall_distance_bonus.c \
+				fill_img_bonus.c fill_with_texture_bonus.c \
+				event_hook_routine_bonus.c vector_utils_bonus.c
+
+SRCS_BONUS	:= $(addprefix ./srcs_bonus/, $(SRC_BONUS))
+OBJ_BONUS 	:= $(SRCS_BONUS:.c=.o)
 
 ########################################################################################
 #---------------------------------HEADER_FILE------------------------------------------#
@@ -27,6 +35,9 @@ OBJ 		:= $(SRCS:.c=.o)
 
 INC			:= cub3d.h
 INCS		:= $(addprefix ./includes/, $(INC))
+
+INC_BONUS	:= cub3d_bonus.h
+INCS_BONUS	:= $(addprefix ./includes_bonus/, $(INC_BONUS))
 
 ########################################################################################
 #-----------------------------------LIB_VAR--------------------------------------------#
@@ -103,7 +114,10 @@ endef
 
 all: $(NAME)
 
-bonus: $(NAME)
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(LIBNAME) $(OBJ_BONUS)
+	@$(COMP) $(CFLAGS) $(OBJ_BONUS) -o $@ -L $(LIBPATH) -lft -lmlx -framework OpenGL -framework AppKit -lm
 
 $(NAME): $(LIBNAME) $(OBJ)
 	@$(COMP) $(CFLAGS) $(OBJ) -o $@ -L $(LIBPATH) -lft -lmlx -framework OpenGL -framework AppKit -lm
