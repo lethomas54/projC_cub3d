@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_wall_distance.c                                :+:      :+:    :+:   */
+/*   get_wall_distance_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:02:22 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 17:03:13 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:36:18 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d_bonus.h"
 
 static void	init_side_dist(t_vector pos, t_vector ray, t_vector *next_side_dist,
 	t_vector *delta_dist)

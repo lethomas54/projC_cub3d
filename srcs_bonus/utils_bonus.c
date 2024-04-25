@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_utils.c                                     :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:56:42 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 16:57:16 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:32:54 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d_bonus.h"
+
+int	get_time(time_t *time_int)
+{
+	struct timeval	time_struct;
+
+	if (gettimeofday(&time_struct, NULL))
+		return (EXIT_FAILURE);
+	*time_int = 1000 * time_struct.tv_sec + time_struct.tv_usec / 1000;
+	return (EXIT_SUCCESS);
+}
+
+void	free_tab(int **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab == NULL)
+		return ;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+}
 
 t_vector	vec_assignation(double x, double y)
 {

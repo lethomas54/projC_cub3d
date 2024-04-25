@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 16:57:43 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:37:11 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <math.h>
 # include <mlx.h>
+# include <pthread.h>
+# include <sys/time.h>
 
 # include "../libft/includes/libft.h"
 
@@ -25,7 +27,6 @@
 
 # define WIN_SIZE_X 1000
 # define WIN_SIZE_Y 1000
-# define PIXEL_SIZE 1
 
 # define PLAYER_POS_X 1.5
 # define PLAYER_POS_Y 1.5
@@ -58,7 +59,10 @@
 # define W 13
 
 # define ON_KEY_DOWN 2
+# define ON_KEY_UP 3
 # define ON_DESTROY 17
+
+# define NB_THREAD 8
 
 typedef struct s_img
 {
@@ -92,13 +96,20 @@ typedef struct s_player
 
 typedef struct s_texture
 {
-	int			floor;
-	int			ceiling;
+	t_img		floor;
+	t_img		ceiling;
 	t_img		north;
 	t_img		east;
 	t_img		south;
 	t_img		west;
 }	t_texture;
+
+typedef struct s_move
+{
+	int			paral;
+	int			perp;
+	int			rot;
+}	t_move;
 
 typedef struct s_data
 {
@@ -106,19 +117,33 @@ typedef struct s_data
 	t_player	pl;
 	t_texture	tex;
 	int			**map;
+	t_move		move;
+	time_t		last_draw;
 }	t_data;
 
-void		draw_on_screen(t_data dt);
+typedef struct s_thread_arg
+{
+	t_data	data;
+	int		index;
+}	t_thread_arg;
+
+int			draw_on_screen(t_data dt);
+void		draw_floor_ceiling(t_data dt, int start_line, int end_line);
+void		draw_wall(t_data dt, int start_col, int end_col);
 double		get_wall_distance(t_data dt, t_vector ray, int *wall_dir);
-void		fill_img(t_data dt, double wall_dist, int wall_dir,
-				double corner_dist);
-void		fill_with_texture(int pixel_nb[2], t_img tex, double corner_dist,
-				t_img *img);
+void		fill_wall_col_with_texture(int pixel_nb[2], t_img tex,
+				double corner_dist, t_img *img);
 
 int			on_destroy_routine(void *data);
-int			key_routine(int key_code, void *void_dt);
-void		free_tab(int **tab);
+int			key_down_routine(int key_code, void *void_dt);
+int			key_up_routine(int key_code, void *void_dt);
+int			loop_routine(void *void_dt);
 
+void		set_new_pos(t_data *dt);
+void		set_new_dir(t_data *dt);
+
+int			get_time(time_t *time_int);
+void		free_tab(int **tab);
 t_vector	vec_assignation(double x, double y);
 t_vector	vec_normalization(t_vector vec_to_norm);
 t_vector	vec_rotate(t_vector vec_to_rot, double rot_step);

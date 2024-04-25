@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_with_texture.c                                :+:      :+:    :+:   */
+/*   fill_wall_col_with_texture_bonus.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:28:49 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 17:05:21 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:24:47 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d_bonus.h"
 
 static double	get_texture_step(int *wall_pix_above, t_img tex)
 {
@@ -39,7 +39,7 @@ static double	get_texture_offset(int wall_pix_above, t_img tex)
 	return (tex_offset);
 }
 
-void	fill_with_texture(int pixel_nb[2], t_img tex, double corner_dist,
+void	fill_wall_col_with_texture(int pixel_nb[2], t_img tex, double corner_dist,
 	t_img *img)
 {
 	int		tex_col;
