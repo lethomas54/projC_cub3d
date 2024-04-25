@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/25 16:37:11 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/25 22:03:41 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
-# include <mlx.h>
+# include "../mlx/mlx.h"
 # include <pthread.h>
 # include <sys/time.h>
 
@@ -40,8 +40,8 @@
 # define PLAYER_HEIGHT 1.0
 # define WALL_HEIGHT 2.0 //doit etre strictement superieur a la taille du joueur
 
-# define ROTATE_STEP 0.2
-# define TRANSLATION_STEP 0.1
+# define ROTATE_STEP 0.02
+# define TRANSLATION_STEP 0.05
 
 # define HIT_BOX 0.1
 
@@ -63,6 +63,8 @@
 # define ON_DESTROY 17
 
 # define NB_THREAD 8
+
+# define WEAPON_PCT_X 0.2
 
 typedef struct s_img
 {
@@ -94,8 +96,19 @@ typedef struct s_player
 	t_vector	dir;
 }	t_player;
 
+typedef struct s_sprite
+{
+	t_img		*sprite;
+	int			nb;
+	int			index;
+	time_t		time;
+	int			def_x;
+	int			def_y;
+}	t_sprite;
+
 typedef struct s_texture
 {
+	t_sprite	gun;
 	t_img		floor;
 	t_img		ceiling;
 	t_img		north;

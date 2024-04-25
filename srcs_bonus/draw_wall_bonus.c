@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:37:41 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/25 12:14:20 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:25:43 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ static void	set_pixel_nb(double wall_dist, int *floor_pix, int *wall_pix,
 static void	fill_img(t_data dt, double wall_dist, int wall_dir,
 	double corner_dist)
 {
-	int		i;
 	int		floor_pix;
 	int		wall_pix[2];
 	int		ceiling_pix;
 	t_img	wall_tex;
 
-	i = 0;
 	set_pixel_nb(wall_dist, &floor_pix, wall_pix, &ceiling_pix);
 	if (wall_dir == NORTH)
 		wall_tex = dt.tex.north;
@@ -46,13 +44,10 @@ static void	fill_img(t_data dt, double wall_dist, int wall_dir,
 		wall_tex = dt.tex.south;
 	else
 		wall_tex = dt.tex.west;
-	while (i++ < 1)
-	{
-		dt.mlx.img.addr += ceiling_pix * dt.mlx.img.line_len;
-		fill_wall_col_with_texture(wall_pix, wall_tex, corner_dist,
-			&dt.mlx.img);
-		dt.mlx.img.addr += floor_pix * dt.mlx.img.line_len;
-	}
+	dt.mlx.img.addr += ceiling_pix * dt.mlx.img.line_len;
+	fill_wall_col_with_texture(wall_pix, wall_tex, corner_dist,
+		&dt.mlx.img);
+	dt.mlx.img.addr += floor_pix * dt.mlx.img.line_len;
 }
 
 static double	get_corner_distance(t_vector pos, t_vector ray,

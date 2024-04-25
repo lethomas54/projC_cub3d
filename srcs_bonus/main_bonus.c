@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:34:11 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/25 15:22:27 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:55:51 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,51 @@ static int	set_event_hook(t_data *dt)
 }
 //check failure auto_repeat_on
 
+static int	get_sprite(void *mlx_ptr, t_sprite *sprite, char *path, int img_nb)
+{
+	t_img	full_sprite;
+	int		i;
+	int		j;
+	int		sprite_index;
+
+	sprite_index = 0;
+	full_sprite.ptr = mlx_xpm_file_to_image(mlx_ptr, path, &full_sprite.def_x, &full_sprite.def_y);
+	if (full_sprite.ptr == NULL)
+		return (STOP_FAILURE);
+	full_sprite.addr = mlx_get_data_addr(full_sprite.ptr, &full_sprite.bit_per_pix, &full_sprite.line_len, &full_sprite.endian);
+	if (full_sprite.addr == NULL)
+		return (STOP_FAILURE);
+	sprite->index = 0;
+	sprite->nb = img_nb;
+	sprite->def_x = full_sprite.def_x / img_nb;
+	sprite->def_y = full_sprite.def_y;
+	sprite->sprite = (t_img *)malloc(img_nb * sizeof(t_img));
+	while (sprite_index < img_nb)
+	{
+		sprite->sprite[sprite_index].ptr = mlx_new_image(mlx_ptr, sprite->def_x, sprite->def_y);
+		if (sprite->sprite[sprite_index].ptr == NULL)
+			return (STOP_FAILURE);
+		sprite->sprite[sprite_index].addr = mlx_get_data_addr(sprite->sprite[sprite_index].ptr, &sprite->sprite[sprite_index].bit_per_pix, &sprite->sprite[sprite_index].line_len, &sprite->sprite[sprite_index].endian);
+		if (sprite->sprite[sprite_index].addr == NULL)
+			return (STOP_FAILURE);
+		j = 0;
+		while (j < sprite->def_y)
+		{
+			i = 0;
+			while (i < sprite->def_x)
+			{
+				*(unsigned int *)(sprite->sprite[sprite_index].addr + i * sprite->sprite[sprite_index].bit_per_pix / 8 + j * sprite->sprite[sprite_index].line_len) = *(unsigned int *)(full_sprite.addr + i * full_sprite.bit_per_pix / 8 + j * full_sprite.line_len);
+				i++;
+			}
+			j++;
+		}
+		full_sprite.addr += sprite->def_x * full_sprite.bit_per_pix / 8;
+		sprite_index++;
+	}
+	mlx_destroy_image(mlx_ptr, full_sprite.ptr);
+	return (CONTINUE_SUCCESS);
+}
+
 static int	init_data(t_data *dt, char *file_path)
 {
 	int	i;
@@ -82,6 +127,8 @@ static int	init_data(t_data *dt, char *file_path)
 		return (STOP_FAILURE);
 	dt->pl.pos = vec_assignation(PLAYER_POS_X, PLAYER_POS_Y);
 	dt->pl.dir = vec_assignation(PLAYER_DIR_X, PLAYER_DIR_Y);
+	if (get_sprite(dt->mlx.ptr, &dt->tex.gun,"texture/gun.xpm", 4))
+		return (STOP_FAILURE);
 	dt->tex.floor.ptr = mlx_xpm_file_to_image(dt->mlx.ptr, "texture/rect_tile.xpm", &dt->tex.floor.def_x, &dt->tex.floor.def_y);
 	if (dt->tex.floor.ptr == NULL)
 		return (STOP_FAILURE);

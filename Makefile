@@ -47,6 +47,9 @@ INCS_BONUS	:= $(addprefix ./includes_bonus/, $(INC_BONUS))
 LIBPATH 	:= ./libft/
 LIBNAME 	:= $(LIBPATH)libft.a
 
+MLXPATH		:= ./mlx/
+MLXFMK		:= -framework OpenGL -framework AppKit
+
 ########################################################################################
 #-----------------------------------COLOR_VAR------------------------------------------#
 ########################################################################################
@@ -165,10 +168,10 @@ all: $(NAME)
 bonus: $(NAME_BONUS)
 
 $(NAME): $(LIBNAME) $(OBJ)
-	@$(COMP) $(CFLAGS) $(OBJ) -o $@ -L $(LIBPATH) -lft -lmlx -framework OpenGL -framework AppKit -lm
+	@$(COMP) $(CFLAGS) $(OBJ) -o $@ -L $(LIBPATH) -L $(MLXPATH) -lft -lmlx $(MLXFMK) -lm
 
 $(NAME_BONUS): $(LIBNAME) $(OBJ_BONUS)
-	@$(COMP) $(CFLAGS) $(OBJ_BONUS) -o $@ -L $(LIBPATH) -lft -lmlx -framework OpenGL -framework AppKit -lm
+	@$(COMP) $(CFLAGS) $(OBJ_BONUS) -o $@ -L $(LIBPATH) -L $(MLXPATH) -lft -lmlx $(MLXFMK) -lm
 
 $(LIBNAME):
 	@make -C $(LIBPATH) all
