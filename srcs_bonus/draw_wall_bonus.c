@@ -6,25 +6,28 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:37:41 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/25 20:25:43 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:32:19 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/cub3d_bonus.h"
 
-static void	set_pixel_nb(double wall_dist, int *floor_pix, int *wall_pix,
-	int *ceiling_pix)
+static int	set_pixel_nb(double wall_dist, int *wall_pix, int *ceiling_pix,
+	double player_height)
 {
-	*floor_pix = WIN_SIZE_Y * 0.5
-		* (1.0 - PLAYER_HEIGHT / (wall_dist * tan(FOV_Y * 0.5)));
-	if (*floor_pix < 0)
-		*floor_pix = 0;
-	wall_pix[0] = WIN_SIZE_Y * 0.5 - *floor_pix;
+	int		floor_pix;
+	
+	floor_pix = WIN_SIZE_Y * 0.5
+		* (1.0 - player_height / (wall_dist * tan(FOV_Y * 0.5)));
+	if (floor_pix < 0)
+		floor_pix = 0;
+	wall_pix[0] = WIN_SIZE_Y * 0.5 - floor_pix;
 	wall_pix[1] = WIN_SIZE_Y * 0.5
-		* (WALL_HEIGHT - PLAYER_HEIGHT) / (wall_dist * tan(FOV_Y * 0.5));
+		* (WALL_HEIGHT - player_height) / (wall_dist * tan(FOV_Y * 0.5));
 	*ceiling_pix = WIN_SIZE_Y * 0.5 - wall_pix[1];
 	if (*ceiling_pix < 0)
 		*ceiling_pix = 0;
+	return (floor_pix);
 }
 
 static void	fill_img(t_data dt, double wall_dist, int wall_dir,
@@ -35,7 +38,7 @@ static void	fill_img(t_data dt, double wall_dist, int wall_dir,
 	int		ceiling_pix;
 	t_img	wall_tex;
 
-	set_pixel_nb(wall_dist, &floor_pix, wall_pix, &ceiling_pix);
+	floor_pix = set_pixel_nb(wall_dist, wall_pix, &ceiling_pix, dt.pl.height);
 	if (wall_dir == NORTH)
 		wall_tex = dt.tex.north;
 	else if (wall_dir == EAST)
@@ -46,7 +49,7 @@ static void	fill_img(t_data dt, double wall_dist, int wall_dir,
 		wall_tex = dt.tex.west;
 	dt.mlx.img.addr += ceiling_pix * dt.mlx.img.line_len;
 	fill_wall_col_with_texture(wall_pix, wall_tex, corner_dist,
-		&dt.mlx.img);
+		&dt);
 	dt.mlx.img.addr += floor_pix * dt.mlx.img.line_len;
 }
 

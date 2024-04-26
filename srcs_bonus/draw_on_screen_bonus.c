@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 09:51:47 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/25 12:39:09 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:26:04 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ int	draw_on_screen(t_data dt)
 		return (STOP_FAILURE);
 	if (create_thread(dt, &start_draw_wall))
 		return (STOP_FAILURE);
+	draw_weapon(dt);
 	return (CONTINUE_SUCCESS);
 }
-//check failure mlx_put

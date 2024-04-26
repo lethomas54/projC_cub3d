@@ -22,10 +22,12 @@ SRC			:=	main.c draw_on_screen.c get_wall_distance.c fill_img.c \
 SRCS		:= $(addprefix ./srcs/, $(SRC))
 OBJ 		:= $(SRCS:.c=.o)
 
-SRC_BONUS	:=	main_bonus.c draw_on_screen_bonus.c get_wall_distance_bonus.c \
-				draw_wall_bonus.c fill_wall_col_with_texture_bonus.c \
+SRC_BONUS	:=	main_bonus.c set_sprite_bonus.c draw_on_screen_bonus.c \
+				get_wall_distance_bonus.c draw_wall_bonus.c \
+				fill_wall_col_with_texture_bonus.c draw_weapon_bonus.c \
 				draw_floor_ceiling_bonus.c event_hook_routine_bonus.c \
-				set_new_pos_dir_bonus.c utils_bonus.c
+				update_player_data_bonus.c update_spritesheet_index_bonus.c \
+				vec_operation_bonus.c exit_bonus.c get_time_bonus.c
 
 SRCS_BONUS	:= $(addprefix ./srcs_bonus/, $(SRC_BONUS))
 OBJ_BONUS 	:= $(SRCS_BONUS:.c=.o)
@@ -48,6 +50,7 @@ LIBPATH 	:= ./libft/
 LIBNAME 	:= $(LIBPATH)libft.a
 
 MLXPATH		:= ./mlx/
+MLXNAME		:= $(MLXPATH)libmlx.a
 MLXFMK		:= -framework OpenGL -framework AppKit
 
 ########################################################################################
@@ -167,14 +170,17 @@ all: $(NAME)
 
 bonus: $(NAME_BONUS)
 
-$(NAME): $(LIBNAME) $(OBJ)
+$(NAME): $(LIBNAME) $(MLXNAME) $(OBJ)
 	@$(COMP) $(CFLAGS) $(OBJ) -o $@ -L $(LIBPATH) -L $(MLXPATH) -lft -lmlx $(MLXFMK) -lm
 
-$(NAME_BONUS): $(LIBNAME) $(OBJ_BONUS)
+$(NAME_BONUS): $(LIBNAME) $(MLXNAME) $(OBJ_BONUS)
 	@$(COMP) $(CFLAGS) $(OBJ_BONUS) -o $@ -L $(LIBPATH) -L $(MLXPATH) -lft -lmlx $(MLXFMK) -lm
 
 $(LIBNAME):
 	@make -C $(LIBPATH) all
+
+$(MLXNAME):
+	@make -C $(MLXPATH) all
 
 $(OBJ): %.o: %.c $(INCS)
 	@$(COMP) $(CFLAGS) -c $< -o $@
@@ -198,12 +204,14 @@ bonus_clean:
 
 fclean:
 	@make -C $(LIBPATH) fclean
+	@make -C $(MLXPATH) clean
 	@rm -f $(OBJ) $(NAME)
 	@echo "$(RED_BOLD)$(NAME) fclean: $(GREEN)OK$(WHITE)"
 	@$(eval CURRENT_FILE := 0)
 
 bonus_fclean:
 	@make -C $(LIBPATH) fclean
+	@make -C $(MLXPATH) clean
 	@rm -f $(OBJ_BONUS) $(NAME_BONUS)
 	@echo "$(RED_BOLD)$(NAME_BONUS) fclean: $(GREEN)OK$(WHITE)"
 	@$(eval CURRENT_FILE_B := 0)

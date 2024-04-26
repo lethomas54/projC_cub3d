@@ -1,19 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_new_pos_bonus.c                                :+:      :+:    :+:   */
+/*   update_player_data_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:04:13 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/25 15:14:02 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:59:06 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/cub3d_bonus.h"
 
-void	set_new_pos(t_data *dt)
+static void set_new_height(t_data *dt)
 {
+	static t_bool	is_g_down;
+	
+	(void)is_g_down;
+	(void)dt;
+	// if (is_g_down == false)
+	// {
+	// 	dt->pl.height
+	// 		+= PLAYER_HEIGHT_MAX_PCT_OFFSET * PLAYER_HEIGHT / PLAYER_HEIGHT_TIME * 1000.0 / 60.0;
+	// 	if (dt->pl.height > (1 + PLAYER_HEIGHT_MAX_PCT_OFFSET) * PLAYER_HEIGHT)
+	// 	{
+	// 		dt->pl.height = (1 + PLAYER_HEIGHT_MAX_PCT_OFFSET) * PLAYER_HEIGHT;
+	// 		is_g_down = true;
+	// 	}
+	// }
+	// else if (is_g_down == true)
+	// {
+	// 	dt->pl.height
+	// 		-= PLAYER_HEIGHT_MAX_PCT_OFFSET * PLAYER_HEIGHT / PLAYER_HEIGHT_TIME * 1000.0 / 60.0;
+	// 	if (dt->pl.height < (1 - PLAYER_HEIGHT_MAX_PCT_OFFSET) * PLAYER_HEIGHT)
+	// 	{
+	// 		dt->pl.height = (1 - PLAYER_HEIGHT_MAX_PCT_OFFSET) * PLAYER_HEIGHT;
+	// 		is_g_down = false;
+	// 	}
+	// }
+	// printf("%f\n", dt->pl.height);
+}
+
+static void	set_new_pos(t_data *dt)
+{ 
 	t_vector	m_vec;
 	double		wall_dist;
 	double		m_dist;
@@ -38,8 +67,23 @@ void	set_new_pos(t_data *dt)
 	dt->pl.pos.y += m_dist * m_vec.y;
 }
 
-void	set_new_dir(t_data *dt)
+static void	set_new_dir(t_data *dt)
 {
 	if (dt->move.rot != 0)
 		dt->pl.dir = vec_rotate(dt->pl.dir, dt->move.rot * ROTATE_STEP);
+}
+
+static void	shoot_routine(t_data *dt)
+{
+	if (dt->pl.has_shot == false)
+		return ;
+	dt->pl.has_shot = false;
+}
+
+void update_player_data(t_data *dt)
+{
+	set_new_height(dt);
+	set_new_pos(dt);
+	set_new_dir(dt);
+	shoot_routine(dt);
 }

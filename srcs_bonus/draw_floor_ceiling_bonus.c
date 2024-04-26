@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:22:24 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/25 11:54:46 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:22:37 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	fill_img_line_for_floor_ceil(t_data dt, t_vector floor_vec,
 	dt.mlx.img.addr += dt.mlx.img.line_len * horizontal_line_nb;
 	img_addr_floor = dt.mlx.img.addr
 		+ (WIN_SIZE_Y - 1 - 2 * horizontal_line_nb) * dt.mlx.img.line_len;
-	while (j < WIN_SIZE_X)
+	while (j++ < WIN_SIZE_X)
 	{
 		tex_line_pct = (floor_vec.y - floor(floor_vec.y));
 		tex_col_pct = (floor_vec.x - floor(floor_vec.x));
@@ -40,9 +40,8 @@ static void	fill_img_line_for_floor_ceil(t_data dt, t_vector floor_vec,
 		add_pixel(img_addr_floor, dt.tex.floor, tex_col_pct, tex_line_pct);
 		dt.mlx.img.addr += dt.mlx.img.bit_per_pix / 8;
 		img_addr_floor += dt.mlx.img.bit_per_pix / 8;
-		floor_vec = vec_assignation(floor_vec.x - floor_step.x,
-				floor_vec.y - floor_step.y);
-		j += 1;
+		floor_vec.x -= floor_step.x;
+		floor_vec.y	-= floor_step.y;
 	}
 }
 
@@ -56,12 +55,11 @@ void	draw_floor_ceiling(t_data dt, int start_line, int end_line)
 
 	ray = vec_assignation(dt.pl.dir.x + -dt.pl.dir.y * tan(FOV_X * 0.5),
 			dt.pl.dir.y + dt.pl.dir.x * tan(FOV_X * 0.5));
-	cam_step = vec_assignation(-dt.pl.dir.y * tan(FOV_X * 0.5)
-			* 2.0 / (WIN_SIZE_X - 1),
-			dt.pl.dir.x * tan(FOV_X * 0.5) * 2.0 / (WIN_SIZE_X - 1));
+	cam_step.x = -dt.pl.dir.y * tan(FOV_X * 0.5) * 2.0 / (WIN_SIZE_X - 1);
+	cam_step.y = dt.pl.dir.x * tan(FOV_X * 0.5) * 2.0 / (WIN_SIZE_X - 1);
 	while (start_line < end_line)
 	{
-		floor_dist = PLAYER_HEIGHT * (WIN_SIZE_Y - 1) * 0.5
+		floor_dist = dt.pl.height * (WIN_SIZE_Y - 1) * 0.5
 			/ (tan(FOV_Y * 0.5) * fabs((WIN_SIZE_Y - 1) * 0.5 - start_line));
 		floor_vec = vec_assignation(dt.pl.pos.x + ray.x * floor_dist,
 				dt.pl.pos.y + ray.y * floor_dist);
