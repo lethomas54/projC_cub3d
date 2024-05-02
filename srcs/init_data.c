@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:38:24 by npremont          #+#    #+#             */
-/*   Updated: 2024/04/24 14:01:45 by npremont         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:28:52 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	*get_next_true_line(int fd, t_bool trim)
 
 static int	get_texture_image(t_img *img, t_data *dt, char *path)
 {
-	printf("tex path: %s\n", path);
 	img->ptr = mlx_xpm_file_to_image(dt->mlx.ptr, path, &img->def_x,
 			&img->def_y);
 	if (img->ptr == NULL)

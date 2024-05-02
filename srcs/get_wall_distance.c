@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_wall_distance.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:02:22 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 17:03:13 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:46:18 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ double	get_wall_distance(t_data dt, t_vector ray, int *wall_dir)
 			wall_index[1] += index_step[1];
 			*wall_dir = 2 + (index_step[1] == -1);
 		}
-		if (dt.map[wall_index[0]][wall_index[1]] == 1)
+		if (dt.map[wall_index[1]][wall_index[0]] == 1)
 			return (set_wall_distance(next_side_dist, delta_dist, *wall_dir));
 	}
 }

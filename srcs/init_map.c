@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:07:17 by npremont          #+#    #+#             */
-/*   Updated: 2024/04/24 18:56:59 by npremont         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:37:35 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,14 +179,6 @@ int	**ft_list_to_matrix(t_list *map, int map_x, int map_y)
 		while (str[++j])
 			res[i][j] = str[j] - '0';
 		map = map->next;
-	}
-	i = -1;
-	while (res[++i])
-	{
-		j = -1;
-		while (++j < map_x - 1)
-			printf("%d", res[i][j]);
-		printf("\n");
 	}
 	return (res);
 }
