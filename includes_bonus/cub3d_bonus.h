@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/26 16:43:14 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:42:10 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define FOV_Y 1.57
 //adater les FOV entre eux selon le rapport entre les cotes de la fenetre ?
 
-# define PLAYER_HEIGHT 0.5
+# define PLAYER_HEIGHT 1.0
 # define PLAYER_HEIGHT_MAX_PCT_OFFSET 0.1
 # define PLAYER_HEIGHT_TIME 500
 # define WALL_HEIGHT 2.0 //doit etre strictement superieur a la taille du joueur
