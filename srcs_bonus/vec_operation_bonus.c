@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_utils.c                                     :+:      :+:    :+:   */
+/*   vec_operation_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 17:56:42 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 16:57:16 by lethomas         ###   ########.fr       */
+/*   Created: 2024/04/26 16:34:16 by lethomas          #+#    #+#             */
+/*   Updated: 2024/07/16 16:59:48 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d_bonus.h"
 
 t_vector	vec_assignation(double x, double y)
 {

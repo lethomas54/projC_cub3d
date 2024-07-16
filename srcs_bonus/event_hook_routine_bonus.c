@@ -1,84 +1,90 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   event_hook_routine.c                               :+:      :+:    :+:   */
+/*   event_hook_routine_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:11:49 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 17:09:35 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:54:59 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-
-void	free_tab(int **tab)
-{
-	int	i;
-
-	i = 0;
-	if (tab == NULL)
-		return ;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
-}
+#include "../includes_bonus/cub3d_bonus.h"
 
 int	on_destroy_routine(void *dt)
 {
-	free_tab(((t_data *)dt)->map);
-	exit(EXIT_SUCCESS);
-	return (EXIT_SUCCESS);
+	free_exit(EXIT_SUCCESS, *(t_data *)dt);
+	return (CONTINUE_SUCCESS);
 }
 
-static void	set_new_pos(t_data *dt, t_bool move_along_dir, int dir_sign)
-{
-	t_vector	m_vec;
-	double		wall_dist;
-	double		m_dist;
-	int			wall_dir;
-	double		hit_box_along;
-
-	if (move_along_dir == true)
-		m_vec = vec_assignation(dir_sign * dt->pl.dir.x,
-				dir_sign * dt->pl.dir.y);
-	else
-		m_vec = vec_assignation(-dir_sign * dt->pl.dir.y,
-				dir_sign * dt->pl.dir.x);
-	wall_dist = get_wall_distance(*dt, m_vec, &wall_dir);
-	hit_box_along
-		= HIT_BOX / (m_vec.x * ((wall_dir == NORTH) - (wall_dir == SOUTH))
-			+ m_vec.y * ((wall_dir == WEST) - (wall_dir == EAST)));
-	if (wall_dist > TRANSLATION_STEP + hit_box_along)
-		m_dist = TRANSLATION_STEP;
-	else
-		m_dist = wall_dist - hit_box_along;
-	dt->pl.pos.x += m_dist * m_vec.x;
-	dt->pl.pos.y += m_dist * m_vec.y;
-}
-
-int	key_routine(int key_code, void *void_dt)
+int	key_down_routine(int key_code, void *void_dt)
 {
 	t_data	*dt;
 	int		sign;
 
 	dt = (t_data *)void_dt;
-	if (key_code == ESCAPE)
-	{
-		free_tab(dt->map);
-		exit(EXIT_SUCCESS);
-	}
 	if (key_code == ARROW_LEFT || key_code == ARROW_RIGHT)
 	{
 		sign = 1 - 2 * (key_code == ARROW_RIGHT);
-		dt->pl.dir = vec_rotate(dt->pl.dir, sign * ROTATE_STEP);
-		draw_on_screen(*dt);
+		dt->move.rot = sign;
 	}
-	else if (key_code == W || key_code == S || key_code == A || key_code == D)
+	else if (key_code == LETTER_W || key_code == LETTER_S)
 	{
-		sign = 1 - 2 * (key_code == S) - 2 * (key_code == D);
-		set_new_pos(dt, key_code == W || key_code == S, sign);
-		draw_on_screen(*dt);
+		sign = 1 - 2 * (key_code == LETTER_S);
+		dt->move.paral = sign;
+	}
+	else if (key_code == LETTER_A || key_code == LETTER_D)
+	{
+		sign = 1 - 2 * (key_code == LETTER_D);
+		dt->move.perp = sign;
+	}
+	else if (key_code == SPACE_BAR && dt->spr.weapon.index == 0)
+		dt->pl.has_shot = true;
+	return (CONTINUE_SUCCESS);
+}
+
+int	key_up_routine(int key_code, void *void_dt)
+{
+	t_data	*dt;
+
+	dt = (t_data *)void_dt;
+	if (key_code == ESCAPE)
+		free_exit(EXIT_SUCCESS, *dt);
+	if (key_code == ARROW_LEFT || key_code == ARROW_RIGHT)
+		dt->move.rot = 0;
+	else if (key_code == LETTER_W || key_code == LETTER_S)
+		dt->move.paral = 0;
+	else if (key_code == LETTER_A || key_code == LETTER_D)
+		dt->move.perp = 0;
+	return (CONTINUE_SUCCESS);
+}
+
+int	loop_routine(void *void_dt)
+{
+	t_data			*dt;
+	time_t			time;
+	static t_bool	has_draw;
+
+	dt = (t_data *)void_dt;
+	if (get_time(&time))
+		free_exit(STOP_FAILURE, *dt);
+	if (has_draw == false)
+	{
+		if (update_spritesheet_index(dt, time))
+			free_exit(STOP_FAILURE, *dt);
+		update_player_data(dt);
+		if (draw_on_screen(*dt))
+			free_exit(STOP_FAILURE, *dt);
+		has_draw = true;
+	}
+	if ((time - dt->last_draw) * 6.0 >= 100.0)
+	{
+		if (get_time(&dt->last_draw))
+			free_exit(STOP_FAILURE, *dt);
+		mlx_put_image_to_window(dt->mlx.ptr,
+			dt->mlx.win, dt->mlx.img.ptr, 0, 0);
+		has_draw = false;
 	}
 	return (EXIT_SUCCESS);
 }

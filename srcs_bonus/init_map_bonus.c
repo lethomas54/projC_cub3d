@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map.c                                         :+:      :+:    :+:   */
+/*   init_map_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:07:17 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/16 13:41:25 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:28:15 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d_bonus.h"
 
 static t_list	*ft_get_map_in_list(int fd)
 {
@@ -35,7 +35,7 @@ static t_list	*ft_get_map_in_list(int fd)
 	return (map);
 }
 
-int	ft_replace_player(char *c, double x, double y, t_data *dt)
+static int	ft_replace_player(char *c, double x, double y, t_data *dt)
 {
 	static int	found;
 
@@ -55,7 +55,7 @@ int	ft_replace_player(char *c, double x, double y, t_data *dt)
 	return (CONTINUE_SUCCESS);
 }
 
-int	ft_init_player(t_list *map, t_data *dt)
+static int	ft_init_player(t_list *map, t_data *dt)
 {
 	char	*str;
 	int		i;
@@ -77,7 +77,7 @@ int	ft_init_player(t_list *map, t_data *dt)
 	return (CONTINUE_SUCCESS);
 }
 
-int	**ft_list_to_matrix(t_list *map, int map_x, int map_y)
+static int	**ft_list_to_matrix(t_list *map, int map_x, int map_y)
 {
 	int		**res;
 	int		i;

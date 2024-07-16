@@ -1,95 +1,97 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_on_screen.c                                   :+:      :+:    :+:   */
+/*   draw_on_screen_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 09:51:47 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 17:00:12 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:26:04 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d_bonus.h"
 
-// static void	img_swap_line_col(t_img img)
-// {
-// 	int	temp;
-// 	int	col_start;	
-// 	int	i;
-// 	int	j;
-
-// 	col_start = 1;
-// 	i = 0;
-// 	while (i < WIN_SIZE_X)
-// 	{
-// 		j = col_start;
-// 		while (j < WIN_SIZE_Y)
-// 		{
-// 			temp =
-//				*(int *)(img.addr + i * img.bit_per_pix / 8 + j * img.line_len);
-// 			*(int *)(img.addr + i * img.bit_per_pix / 8 + j * img.line_len)
-//				= *(int *)(img.addr + j * img.bit_per_pix / 8
-//						+ i * img.line_len);
-// 			*(int *)(img.addr + j * img.bit_per_pix / 8 + i * img.line_len)
-//				= temp;
-// 			j++;
-// 		}
-// 			i++;
-// 		col_start++;
-// 	}
-// }
-
-static double	get_corner_distance(t_vector pos, t_vector ray,
-	double wall_dist, int wall_dir)
+static void	*start_draw_floor_ceiling(void *arg)
 {
-	t_vector	hit_pos;
+	t_thread_arg	*thread_arg;
+	int				start_line;
+	int				end_line;
 
-	hit_pos = (t_vector){pos.x + wall_dist * ray.x, pos.y + wall_dist * ray.y};
-	if (wall_dir == NORTH)
-		return (1 - hit_pos.y + (int)hit_pos.y);
-	else if (wall_dir == EAST)
-		return (1 - hit_pos.x + (int)hit_pos.x);
-	else if (wall_dir == SOUTH)
-		return (hit_pos.y - (int)hit_pos.y);
-	else
-		return (hit_pos.x - (int)hit_pos.x);
+	thread_arg = (t_thread_arg *)arg;
+	start_line = (WIN_SIZE_Y - 1) / 2 * thread_arg->index / NB_THREAD;
+	end_line = (WIN_SIZE_Y - 1) / 2 * (thread_arg->index + 1) / NB_THREAD;
+	if (thread_arg->index == NB_THREAD - 1)
+		end_line++;
+	draw_floor_ceiling(thread_arg->data, start_line, end_line);
+	return (NULL);
 }
 
-static void	fill_vertical_line(t_data dt, t_vector ray, int vertical_line_nb)
+static void	*start_draw_wall(void *arg)
 {
-	double	wall_dist;
-	double	corner_dist;
-	int		wall_dir;
+	t_thread_arg	*thread_arg;
+	int				start_col;
+	int				end_col;
 
-	wall_dist = get_wall_distance(dt, ray, &wall_dir);
-	corner_dist = get_corner_distance(dt.pl.pos, ray, wall_dist, wall_dir);
-	wall_dist = wall_dist * (dt.pl.dir.x * ray.x + dt.pl.dir.y * ray.y);
-	dt.mlx.img.addr += vertical_line_nb * dt.mlx.img.bit_per_pix / 8;
-	fill_img(dt, wall_dist, wall_dir, corner_dist);
+	thread_arg = (t_thread_arg *)arg;
+	start_col = (WIN_SIZE_X - 1) * thread_arg->index / NB_THREAD;
+	end_col = (WIN_SIZE_X - 1) * (thread_arg->index + 1) / NB_THREAD;
+	if (thread_arg->index == NB_THREAD - 1)
+		end_col++;
+	draw_wall(thread_arg->data, start_col, end_col);
+	return (NULL);
 }
 
-void	draw_on_screen(t_data dt)
+static int	create_thread_data(pthread_t **pthread,
+	t_thread_arg **thread_arg)
 {
-	int			i;
-	t_vector	cam;
-	t_vector	cam_step;
-	t_vector	ray;
+	*pthread = (pthread_t *)ft_calloc(NB_THREAD, sizeof(pthread_t));
+	if (*pthread == NULL)
+		return (STOP_FAILURE);
+	*thread_arg = (t_thread_arg *)malloc(NB_THREAD * sizeof(t_thread_arg));
+	if (*thread_arg == NULL)
+	{
+		free(*pthread);
+		return (STOP_FAILURE);
+	}
+	return (CONTINUE_SUCCESS);
+}
+
+static int	create_thread(t_data dt,
+	void *(*thread_routine)(void *))
+{
+	int				i;
+	int				return_value;
+	pthread_t		*pthread;
+	t_thread_arg	*thread_arg;
 
 	i = 0;
-	cam = vec_assignation(-dt.pl.dir.y * tan(FOV_X * 0.5),
-			dt.pl.dir.x * tan(FOV_X * 0.5));
-	cam_step = vec_assignation(cam.x * 2.0 / (WIN_SIZE_X - 1),
-			cam.y * 2.0 / (WIN_SIZE_X - 1));
-	while (i < WIN_SIZE_X)
+	return_value = CONTINUE_SUCCESS;
+	if (create_thread_data(&pthread, &thread_arg))
+		return (STOP_FAILURE);
+	while (i < NB_THREAD && return_value == CONTINUE_SUCCESS)
 	{
-		ray = vec_assignation(dt.pl.dir.x + cam.x, dt.pl.dir.y + cam.y);
-		ray = vec_normalization(ray);
-		cam = vec_assignation(cam.x - cam_step.x, cam.y - cam_step.y);
-		fill_vertical_line(dt, ray, i);
-		i += PIXEL_SIZE;
+		thread_arg[i].data = dt;
+		thread_arg[i].index = i;
+		return_value = pthread_create(pthread + i, NULL, thread_routine,
+				thread_arg + i);
+		i++;
 	}
-	mlx_put_image_to_window(dt.mlx.ptr, dt.mlx.win, dt.mlx.img.ptr, 0, 0);
+	i = 0;
+	while (i < NB_THREAD && pthread[i])
+		if (pthread_join(pthread[i++], NULL))
+			return_value = STOP_FAILURE;
+	free(pthread);
+	free(thread_arg);
+	return (return_value);
 }
-//img_swap_line_col(dt.mlx.img);
-//check failure mlx_put
+
+int	draw_on_screen(t_data dt)
+{
+	if (create_thread(dt, &start_draw_floor_ceiling))
+		return (STOP_FAILURE);
+	if (create_thread(dt, &start_draw_wall))
+		return (STOP_FAILURE);
+	draw_weapon(dt);
+	return (CONTINUE_SUCCESS);
+}

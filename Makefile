@@ -18,14 +18,17 @@ CFLAGS		:=	-g -fsanitize=address -Wall -Wextra -Werror
 
 SRC			:=	main.c draw_on_screen.c get_wall_distance.c fill_img.c \
 				fill_with_texture.c event_hook_routine.c vector_utils.c \
-				init_data.c init_colors.c init_map.c
+				init_data.c init_colors.c init_map.c init_map_utils.c
 
 SRCS		:= $(addprefix ./srcs/, $(SRC))
 OBJ 		:= $(SRCS:.c=.o)
 
-SRC_BONUS	:=	main_bonus.c draw_on_screen_bonus.c get_wall_distance_bonus.c \
-				fill_img_bonus.c fill_with_texture_bonus.c \
-				event_hook_routine_bonus.c vector_utils_bonus.c
+SRC_BONUS	:=	main_bonus.c draw_floor_ceiling_bonus.c draw_on_screen_bonus.c \
+				draw_wall_bonus.c draw_weapon_bonus.c event_hook_routine_bonus.c \
+				exit_bonus.c fill_wall_col_with_texture_bonus.c get_time_bonus.c \
+				get_wall_distance_bonus.c set_sprite_bonus.c update_player_data_bonus.c \
+				update_spritesheet_index_bonus.c vec_operation_bonus.c \
+				init_data_bonus.c init_colors_bonus.c init_map_bonus.c init_map_utils_bonus.c
 
 SRCS_BONUS	:= $(addprefix ./srcs_bonus/, $(SRC_BONUS))
 OBJ_BONUS 	:= $(SRCS_BONUS:.c=.o)

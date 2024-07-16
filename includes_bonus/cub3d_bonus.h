@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/16 15:22:45 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:02:17 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
 # include "../mlx/mlx.h"
+# include <pthread.h>
+# include <sys/time.h>
+# include <dirent.h>
+# include <errno.h>
 # include <fcntl.h>
 
 # include "../libft/includes/libft.h"
@@ -26,22 +30,23 @@
 
 # define WIN_SIZE_X 1000
 # define WIN_SIZE_Y 1000
-# define PIXEL_SIZE 1
 
 # define PLAYER_POS_X 1.5
 # define PLAYER_POS_Y 1.5
 # define PLAYER_DIR_X 0
-# define PLAYER_DIR_Y -1
+# define PLAYER_DIR_Y 1
 
 # define FOV_X 1.57
 # define FOV_Y 1.57
 //adater les FOV entre eux selon le rapport entre les cotes de la fenetre ?
 
 # define PLAYER_HEIGHT 1.0
+# define PLAYER_HEIGHT_MAX_PCT_OFFSET 0.1
+# define PLAYER_HEIGHT_TIME 500
 # define WALL_HEIGHT 2.0 //doit etre strictement superieur a la taille du joueur
 
-# define ROTATE_STEP 0.2
-# define TRANSLATION_STEP 0.1
+# define ROTATE_STEP 0.04
+# define TRANSLATION_STEP 0.05
 
 # define HIT_BOX 0.1
 
@@ -53,13 +58,23 @@
 # define ESCAPE 53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
-# define A 0
-# define S 1
-# define D 2
-# define W 13
+# define LETTER_A 0
+# define LETTER_S 1
+# define LETTER_D 2
+# define LETTER_W 13
+# define SPACE_BAR 49
 
 # define ON_KEY_DOWN 2
+# define ON_KEY_UP 3
 # define ON_DESTROY 17
+
+# define NB_THREAD 8
+
+# define WEAPON_PCT_X 0.4
+# define WEAPON_OFFSET_PCT_X 0.04
+# define WEAPON_SIGHT_PCT_X 0.005
+# define WEAPON_SIGHT_COLOR_OFF 0x00ff0000
+# define WEAPON_SIGHT_COLOR_ON 0x00ffff00
 
 typedef struct s_img
 {
@@ -89,49 +104,94 @@ typedef struct s_player
 {
 	t_vector	pos;
 	t_vector	dir;
+	double		height;
+	t_bool		has_shot;
 }	t_player;
+
+typedef struct s_sprite
+{
+	t_img		*sheet;
+	int			nb;
+	int			index;
+	time_t		to_switch;
+	time_t		last_switch;
+}	t_sprite;
+
+typedef struct s_lsprite
+{
+	t_sprite	weapon;
+}	t_lsprite;
 
 typedef struct s_texture
 {
-	int			floor;
-	int			ceiling;
+	t_img		floor;
+	t_img		ceiling;
 	t_img		north;
 	t_img		east;
 	t_img		south;
 	t_img		west;
 }	t_texture;
 
+typedef struct s_move
+{
+	int			paral;
+	int			perp;
+	int			rot;
+}	t_move;
+
 typedef struct s_data
 {
 	t_mlx		mlx;
 	t_player	pl;
 	t_texture	tex;
+	t_lsprite	spr;
 	int			**map;
+	t_move		move;
+	time_t		last_draw;
 }	t_data;
 
-void		draw_on_screen(t_data dt);
+typedef struct s_thread_arg
+{
+	t_data	data;
+	int		index;
+}	t_thread_arg;
+
+int			set_sprite(t_data *dt);
+
+int			draw_on_screen(t_data dt);
+void		draw_floor_ceiling(t_data dt, int start_line, int end_line);
+void		draw_wall(t_data dt, int start_col, int end_col);
 double		get_wall_distance(t_data dt, t_vector ray, int *wall_dir);
-void		fill_img(t_data dt, double wall_dist, int wall_dir,
-				double corner_dist);
-void		fill_with_texture(int pixel_nb[2], t_img tex, double corner_dist,
-				t_img *img);
+void		fill_wall_col_with_texture(int pixel_nb[2], t_img tex,
+				double corner_dist, t_data *dt);
+void		draw_weapon(t_data dt);
 
 int			on_destroy_routine(void *data);
-int			key_routine(int key_code, void *void_dt);
+int			key_down_routine(int key_code, void *void_dt);
+int			key_up_routine(int key_code, void *void_dt);
+int			loop_routine(void *void_dt);
+
+int			update_spritesheet_index(t_data *dt, time_t time);
+void		update_player_data(t_data *dt);
+
+int			get_time(time_t *time_int);
 void		free_tab(int **tab);
+void		free_exit(int exit_code, t_data dt);
 
 t_vector	vec_assignation(double x, double y);
 t_vector	vec_normalization(t_vector vec_to_norm);
 t_vector	vec_rotate(t_vector vec_to_rot, double rot_step);
 
+int			init_textures_floor_ceiling(t_data *dt, int fd);
 int			init_textures(t_data *dt, int fd);
-char		*get_next_true_line(int fd, t_bool trim);
 void		ft_free_split(char **split);
-int			init_colors_floor_ceiling(t_data *dt, int fd);
+char		*get_next_true_line(int fd, t_bool trim);
 int			init_map_and_player(t_data *dt, int fd);
+
 void		*ft_realloc(void *ptr, size_t size, int free_ptr);
 int			get_map_x(t_list *map);
 int			ft_normalize_map(t_list *map, int map_len);
 void		ft_skip_whitespaces(int fd, char **line);
+int			get_texture_image(t_img *img, t_data *dt, char *path);
 
 #endif

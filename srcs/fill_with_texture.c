@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_with_texture.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:28:49 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 17:05:21 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:39:39 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	fill_with_texture(int pixel_nb[2], t_img tex, double corner_dist,
 	{
 		*(unsigned int *)img->addr = *(unsigned int *)(tex.addr
 				+ tex_col * tex.bit_per_pix / 8
-				+ tex.line_len * (int)(tex_offset + i++ * tex_step));
+				+ tex.line_len * (int)(tex_offset + i++ *tex_step));
 		img->addr += img->line_len;
 	}
 }

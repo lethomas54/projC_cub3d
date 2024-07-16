@@ -3,44 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   draw_on_screen.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 09:51:47 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/24 10:57:54 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:37:56 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// static void	img_swap_line_col(t_img img)
-// {
-// 	int	temp;
-// 	int	col_start;	
-// 	int	i;
-// 	int	j;
-
-// 	col_start = 1;
-// 	i = 0;
-// 	while (i < WIN_SIZE_X)
-// 	{
-// 		j = col_start;
-// 		while (j < WIN_SIZE_Y)
-// 		{
-// 			temp =
-//				*(int *)(img.addr + i * img.bit_per_pix / 8 + j * img.line_len);
-// 			*(int *)(img.addr + i * img.bit_per_pix / 8 + j * img.line_len)
-//				= *(int *)(img.addr + j * img.bit_per_pix / 8
-//						+ i * img.line_len);
-// 			*(int *)(img.addr + j * img.bit_per_pix / 8 + i * img.line_len)
-//				= temp;
-// 			j++;
-// 		}
-// 			i++;
-// 		col_start++;
-// 	}
-// }
-
-static double	get_corner_distance(t_vector pos, t_vector ray, //manage texture on several walls
+static double	get_corner_distance(t_vector pos, t_vector ray,
 	double wall_dist, int wall_dir)
 {
 	t_vector	hit_pos;
@@ -91,5 +63,3 @@ void	draw_on_screen(t_data dt)
 	}
 	mlx_put_image_to_window(dt.mlx.ptr, dt.mlx.win, dt.mlx.img.ptr, 0, 0);
 }
-//img_swap_line_col(dt.mlx.img);
-//check failure mlx_put

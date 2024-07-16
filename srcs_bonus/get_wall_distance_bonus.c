@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_wall_distance.c                                :+:      :+:    :+:   */
+/*   get_wall_distance_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:02:22 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 17:03:13 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:33:55 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d_bonus.h"
 
 static void	init_side_dist(t_vector pos, t_vector ray, t_vector *next_side_dist,
 	t_vector *delta_dist)
@@ -65,7 +65,7 @@ double	get_wall_distance(t_data dt, t_vector ray, int *wall_dir)
 			wall_index[1] += index_step[1];
 			*wall_dir = 2 + (index_step[1] == -1);
 		}
-		if (dt.map[wall_index[0]][wall_index[1]] == 1)
+		if (dt.map[wall_index[1]][wall_index[0]] == 1)
 			return (set_wall_distance(next_side_dist, delta_dist, *wall_dir));
 	}
 }
