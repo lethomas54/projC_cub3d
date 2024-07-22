@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:11:49 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/16 14:40:10 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/22 09:47:35 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,18 @@ void	free_tab(int **tab)
 	free(tab);
 }
 
+static void	destroy_texture(void *mlx_ptr, t_texture texture)
+{
+	mlx_destroy_image(mlx_ptr, texture.north.ptr);
+	mlx_destroy_image(mlx_ptr, texture.east.ptr);
+	mlx_destroy_image(mlx_ptr, texture.south.ptr);
+	mlx_destroy_image(mlx_ptr, texture.west.ptr);
+}
+
 int	on_destroy_routine(void *dt)
 {
+	mlx_destroy_image(((t_data *)dt)->mlx.ptr, ((t_data *)dt)->mlx.img.ptr);
+	destroy_texture(((t_data *)dt)->mlx.ptr, ((t_data *)dt)->tex);
 	free_tab(((t_data *)dt)->map);
 	exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);

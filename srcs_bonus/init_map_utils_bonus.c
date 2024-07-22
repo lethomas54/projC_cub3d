@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:28:50 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/16 15:28:18 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:09:28 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,14 @@ void	ft_skip_whitespaces(int fd, char **line)
 			return ;
 		free((*line));
 	}
+}
+
+void	set_img_to_null(t_data *dt)
+{
+	dt->tex.north.ptr = NULL;
+	dt->tex.south.ptr = NULL;
+	dt->tex.west.ptr = NULL;
+	dt->tex.east.ptr = NULL;
+	dt->tex.floor.ptr = NULL;
+	dt->tex.ceiling.ptr = NULL;
 }

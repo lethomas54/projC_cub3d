@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:56:42 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/16 16:56:28 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:19:55 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void	free_exit(int exit_code, t_data dt)
 	destroy_texture(dt.mlx.ptr, dt.tex);
 	mlx_destroy_window(dt.mlx.ptr, dt.mlx.win);
 	free_tab(dt.map);
+	system("leaks cub3d_bonus");
 	exit(exit_code);
 }

@@ -6,42 +6,67 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:38:24 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/16 15:28:42 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/22 13:11:55 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/cub3d_bonus.h"
 
-char	*get_next_true_line(int fd, t_bool trim)
-{
-	char	*line;
-	char	*new_line;
-
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (line && line[0] != '\n')
-		{
-			if (trim)
-			{
-				new_line = ft_strrchr(line, '\n');
-				if (new_line)
-					*new_line = '\0';
-			}
-			return (line);
-		}
-		free(line);
-	}
-	return (NULL);
-}
-
 int	get_texture_image(t_img *img, t_data *dt, char *path)
 {
-	img->ptr = mlx_xpm_file_to_image(dt->mlx.ptr, path, &img->def_x,
+	char	*final_path;
+
+	final_path = ft_strtrim(path, " \n\t\v\b");
+	img->ptr = mlx_xpm_file_to_image(dt->mlx.ptr, final_path, &img->def_x,
 			&img->def_y);
+	free(final_path);
 	if (img->ptr == NULL)
 		return (STOP_FAILURE);
 	return (CONTINUE_SUCCESS);
+}
+
+static int	fill_textures_ptr_and_colors(char *line, t_data *dt)
+{
+	if (ft_strncmp(line, "NO ", 3) == 0)
+		if (get_texture_image(&dt->tex.north, dt, line + 3))
+			return (STOP_FAILURE);
+	if (ft_strncmp(line, "SO ", 3) == 0)
+		if (get_texture_image(&dt->tex.south, dt, line + 3))
+			return (STOP_FAILURE);
+	if (ft_strncmp(line, "WE ", 3) == 0)
+		if (get_texture_image(&dt->tex.west, dt, line + 3))
+			return (STOP_FAILURE);
+	if (ft_strncmp(line, "EA ", 3) == 0)
+		if (get_texture_image(&dt->tex.east, dt, line + 3))
+			return (STOP_FAILURE);
+	if (ft_strncmp(line, "C ", 2) == 0)
+		if (get_texture_image(&dt->tex.ceiling, dt, line + 2))
+			return (STOP_FAILURE);
+	if (ft_strncmp(line, "F ", 2) == 0)
+		if (get_texture_image(&dt->tex.floor, dt, line + 2))
+			return (STOP_FAILURE);
+	return (CONTINUE_SUCCESS);
+}
+
+static int	is_valid_line(char *line)
+{
+	static int	prop_found;
+
+	if (++prop_found > 6)
+		return (STOP_FAILURE);
+	if (ft_strncmp(line, "NO ", 3) == 0)
+		return (CONTINUE_SUCCESS);
+	if (ft_strncmp(line, "SO ", 3) == 0)
+		return (CONTINUE_SUCCESS);
+	if (ft_strncmp(line, "WE ", 3) == 0)
+		return (CONTINUE_SUCCESS);
+	if (ft_strncmp(line, "EA ", 3) == 0)
+		return (CONTINUE_SUCCESS);
+	if (ft_strncmp(line, "C ", 2) == 0)
+		return (CONTINUE_SUCCESS);
+	if (ft_strncmp(line, "F ", 2) == 0)
+		return (CONTINUE_SUCCESS);
+	return (STOP_FAILURE);
 }
 
 static int	init_textures_ptr(t_data *dt, int fd)
@@ -50,24 +75,21 @@ static int	init_textures_ptr(t_data *dt, int fd)
 
 	line = get_next_true_line(fd, true);
 	if (line)
-		if (get_texture_image(&dt->tex.north, dt, line + 3))
+	{
+		if (is_valid_line(line))
 			return (STOP_FAILURE);
-	free(line);
-	line = get_next_true_line(fd, true);
-	if (line)
-		if (get_texture_image(&dt->tex.south, dt, line + 3))
+		if (fill_textures_ptr_and_colors(line, dt))
 			return (STOP_FAILURE);
-	free(line);
-	line = get_next_true_line(fd, true);
-	if (line)
-		if (get_texture_image(&dt->tex.west, dt, line + 3))
-			return (STOP_FAILURE);
-	free(line);
-	line = get_next_true_line(fd, true);
-	if (line)
-		if (get_texture_image(&dt->tex.east, dt, line + 3))
-			return (STOP_FAILURE);
-	free(line);
+		free(line);
+		if (!(dt->tex.north.ptr) || !(dt->tex.south.ptr)
+			|| !(dt->tex.west.ptr) || !(dt->tex.east.ptr)
+			|| !(dt->tex.floor.ptr) || !(dt->tex.ceiling.ptr))
+			init_textures_ptr(dt, fd);
+	}
+	if (!(dt->tex.north.ptr) || !(dt->tex.south.ptr)
+		|| !(dt->tex.west.ptr) || !(dt->tex.east.ptr)
+		|| !(dt->tex.floor.ptr) || !(dt->tex.ceiling.ptr))
+		return (STOP_FAILURE);
 	return (CONTINUE_SUCCESS);
 }
 
@@ -95,20 +117,6 @@ int	init_textures(t_data *dt, int fd)
 			&dt->tex.west.endian);
 	if (dt->tex.west.addr == NULL)
 		return (STOP_FAILURE);
+	init_textures_floor_and_ceiling(dt);
 	return (CONTINUE_SUCCESS);
-}
-
-void	ft_free_split(char **split)
-{
-	size_t	i;
-
-	i = 0;
-	if (!split)
-		return ;
-	while (split[i])
-	{
-		free(split[i]);
-		++i;
-	}
-	free(split);
 }

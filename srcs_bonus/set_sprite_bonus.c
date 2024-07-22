@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_sprite_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:53 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/26 15:19:19 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:24:12 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	open_sprite(void *mlx_ptr, char *dir_path, t_sprite *sprite,
 			return (STOP_FAILURE);
 		if (open_xpm_file(mlx_ptr, sprite->sheet + i++, file_path))
 			return (STOP_FAILURE);
+		free(file_path);
 	}
 	return (CONTINUE_SUCCESS);
 }

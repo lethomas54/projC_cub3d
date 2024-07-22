@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/16 15:22:45 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/22 09:50:12 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,8 @@ void		*ft_realloc(void *ptr, size_t size, int free_ptr);
 int			get_map_x(t_list *map);
 int			ft_normalize_map(t_list *map, int map_len);
 void		ft_skip_whitespaces(int fd, char **line);
+void		set_img_to_null(t_data *dt);
+int			get_rgb_from_line(char *line);
+int			line_is_cringe(char *line);
 
 #endif

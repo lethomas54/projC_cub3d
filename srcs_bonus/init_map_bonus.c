@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:07:17 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/16 15:28:15 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:04:50 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static t_list	*ft_get_map_in_list(int fd)
 	t_list	*new;
 
 	ft_skip_whitespaces(fd, &line);
+	if (line_is_cringe(line))
+		return (free(line), NULL);
 	map = ft_lstnew(line);
 	if (!map)
 		return (free(line), NULL);
@@ -27,6 +29,8 @@ static t_list	*ft_get_map_in_list(int fd)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
+		if (line_is_cringe(line))
+			return (ft_lstclear(&map, free), free(line), NULL);
 		new = ft_lstnew(line);
 		if (!new)
 			return (ft_lstclear(&map, free), free(line), NULL);
@@ -35,7 +39,7 @@ static t_list	*ft_get_map_in_list(int fd)
 	return (map);
 }
 
-static int	ft_replace_player(char *c, double x, double y, t_data *dt)
+int	ft_replace_player(char *c, double x, double y, t_data *dt)
 {
 	static int	found;
 
@@ -55,7 +59,7 @@ static int	ft_replace_player(char *c, double x, double y, t_data *dt)
 	return (CONTINUE_SUCCESS);
 }
 
-static int	ft_init_player(t_list *map, t_data *dt)
+int	ft_init_player(t_list *map, t_data *dt)
 {
 	char	*str;
 	int		i;
@@ -77,7 +81,7 @@ static int	ft_init_player(t_list *map, t_data *dt)
 	return (CONTINUE_SUCCESS);
 }
 
-static int	**ft_list_to_matrix(t_list *map, int map_x, int map_y)
+int	**ft_list_to_matrix(t_list *map, int map_x, int map_y)
 {
 	int		**res;
 	int		i;

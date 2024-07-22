@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:34:11 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/16 17:02:36 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/22 09:48:21 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,22 @@ static int	set_event_hook(t_data *dt)
 	mlx_hook(dt->mlx.win, ON_KEY_DOWN, 0, &key_routine, dt);
 	return (CONTINUE_SUCCESS);
 }
-//check failure auto_repeat_on
 
 static int	init_data(t_data *dt, char *file_path)
 {
 	int	fd;
 
+	set_img_to_null(dt);
 	fd = open(file_path, O_RDONLY);
 	if (-1 == fd)
-		return (ft_putendl_fd("Error", 2), STOP_FAILURE);
+		return (ft_putendl_fd("Error", 2), ft_putendl_fd("File not found.", 2),
+			STOP_FAILURE);
 	if (init_textures(dt, fd))
-		return (ft_putendl_fd("Error", 2), STOP_FAILURE);
-	if (init_colors_floor_ceiling(dt, fd))
-		return (ft_putendl_fd("Error", 2), STOP_FAILURE);
+		return (ft_putendl_fd("Error", 2),
+			ft_putendl_fd("Textures or colors corrupted.", 2), STOP_FAILURE);
 	if (init_map_and_player(dt, fd))
-		return (ft_putendl_fd("Error", 2), STOP_FAILURE);
+		return (ft_putendl_fd("Error", 2),
+			ft_putendl_fd("Map corrupted.", 2), STOP_FAILURE);
 	return (CONTINUE_SUCCESS);
 }
 
@@ -67,9 +68,8 @@ int	main(int argc, char **argv)
 	if (set_event_hook(&dt))
 		return (ft_putendl_fd("hook setting failure", 2), EXIT_FAILURE);
 	if (init_data(&dt, argv[1]))
-		return (ft_putendl_fd("data initialisation failure", 2), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	draw_on_screen(dt);
 	mlx_loop(dt.mlx.ptr);
 	return (EXIT_SUCCESS);
 }
-//verifier le retour mlx_loop

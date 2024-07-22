@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/16 17:02:17 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:09:08 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,9 @@
 
 # define FOV_X 1.57
 # define FOV_Y 1.57
-//adater les FOV entre eux selon le rapport entre les cotes de la fenetre ?
 
 # define PLAYER_HEIGHT 1.0
-# define PLAYER_HEIGHT_MAX_PCT_OFFSET 0.1
-# define PLAYER_HEIGHT_TIME 500
-# define WALL_HEIGHT 2.0 //doit etre strictement superieur a la taille du joueur
+# define WALL_HEIGHT 2.0
 
 # define ROTATE_STEP 0.04
 # define TRANSLATION_STEP 0.05
@@ -182,7 +179,7 @@ t_vector	vec_assignation(double x, double y);
 t_vector	vec_normalization(t_vector vec_to_norm);
 t_vector	vec_rotate(t_vector vec_to_rot, double rot_step);
 
-int			init_textures_floor_ceiling(t_data *dt, int fd);
+int			init_textures_floor_and_ceiling(t_data *dt);
 int			init_textures(t_data *dt, int fd);
 void		ft_free_split(char **split);
 char		*get_next_true_line(int fd, t_bool trim);
@@ -193,5 +190,7 @@ int			get_map_x(t_list *map);
 int			ft_normalize_map(t_list *map, int map_len);
 void		ft_skip_whitespaces(int fd, char **line);
 int			get_texture_image(t_img *img, t_data *dt, char *path);
+void		set_img_to_null(t_data *dt);
+int			line_is_cringe(char *line);
 
 #endif
