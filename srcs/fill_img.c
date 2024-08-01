@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:37:41 by lethomas          #+#    #+#             */
-/*   Updated: 2024/04/23 17:00:38 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:01:22 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void	fill_img(t_data dt, double wall_dist, int wall_dir, double corner_dist)
 	i = 0;
 	set_pixel_nb(wall_dist, &floor_pix, wall_pix, &ceiling_pix);
 	set_wall_img(dt.tex, wall_dir, &wall_tex);
-	while (i++ < PIXEL_SIZE)
-	{
-		fill_with_color(ceiling_pix, dt.tex.ceiling, &dt.mlx.img);
-		fill_with_texture(wall_pix, wall_tex, corner_dist, &dt.mlx.img);
-		fill_with_color(floor_pix, dt.tex.floor, &dt.mlx.img);
-	}
+	fill_with_color(ceiling_pix, dt.tex.ceiling, &dt.mlx.img);
+	fill_with_texture(wall_pix, wall_tex, corner_dist, &dt.mlx.img);
+	fill_with_color(floor_pix, dt.tex.floor, &dt.mlx.img);
 }

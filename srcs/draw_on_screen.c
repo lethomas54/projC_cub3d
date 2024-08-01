@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_on_screen.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 09:51:47 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/16 14:37:56 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:01:07 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	draw_on_screen(t_data dt)
 		ray = vec_normalization(ray);
 		cam = vec_assignation(cam.x - cam_step.x, cam.y - cam_step.y);
 		fill_vertical_line(dt, ray, i);
-		i += PIXEL_SIZE;
+		i++;
 	}
 	mlx_put_image_to_window(dt.mlx.ptr, dt.mlx.win, dt.mlx.img.ptr, 0, 0);
 }

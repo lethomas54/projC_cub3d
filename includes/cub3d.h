@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/08/01 14:40:05 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:21:22 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
-# include "../mlx/mlx.h"
+# include <mlx.h>
 # include <fcntl.h>
 
 # include "../libft/includes/libft.h"
@@ -26,18 +26,12 @@
 
 # define WIN_SIZE_X 1000
 # define WIN_SIZE_Y 1000
-# define PIXEL_SIZE 1
-
-# define PLAYER_POS_X 1.5
-# define PLAYER_POS_Y 1.5
-# define PLAYER_DIR_X 0
-# define PLAYER_DIR_Y -1
 
 # define FOV_X 1.57
 # define FOV_Y 1.57
 
 # define PLAYER_HEIGHT 1.0
-# define WALL_HEIGHT 2.0 //doit etre strictement superieur a la taille du joueur
+# define WALL_HEIGHT 2.0		//doit etre strictement superieur a la taille du joueur
 
 # define ROTATE_STEP 0.2
 # define TRANSLATION_STEP 0.1
