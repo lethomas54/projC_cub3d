@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_setflag.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 12:58:14 by lethomas          #+#    #+#             */
-/*   Updated: 2023/11/27 19:26:38 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:39:46 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,3 @@ int	ft_setflag(int *nb_chr, va_list lst_arg, const char **str, int *tab_flag)
 		return (1);
 	return (0);
 }
-
-// int	ft_check_symb_apostrophe(char symb, const char *str)
-// {
-// 	if (symb == '\'')
-// 	{
-// 		if (*(str + 1) == symb)
-// 		{
-// 			if (*(str + 2) == '\'')
-// 			{
-// 				str += 3;
-// 				return (1);
-// 			}
-// 		}
-// 	}
-// 	return (0);
-// }

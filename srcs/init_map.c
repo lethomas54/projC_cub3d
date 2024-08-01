@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:07:17 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/01 12:27:10 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:35:37 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,12 @@ int	**ft_list_to_matrix(t_list *map, int map_x, int map_y)
 		str = (char *)map->content;
 		j = -1;
 		while (str[++j])
-		{
 			res[i][j] = str[j] - '0';
-			printf("%d", res[i][j]);
-		}
-		printf("\n");
 		map = map->next;
 	}
 	ft_lstclear(&map_og, free);
 	return (res);
 }
-
-// void	ft_is_map_playable(t_data *dt, int x, int y, int *is_playable)
-// {
-
-// }
 
 int	init_map_and_player(t_data *dt, int fd)
 {
@@ -125,7 +116,6 @@ int	init_map_and_player(t_data *dt, int fd)
 	int		map_y;
 
 	map = ft_get_map_in_list(fd);
-
 	if (!map)
 		return (STOP_FAILURE);
 	map_x = get_map_x(map);
@@ -137,6 +127,7 @@ int	init_map_and_player(t_data *dt, int fd)
 	dt->map = ft_list_to_matrix(map, map_x, map_y);
 	if (!dt->map)
 		return (STOP_FAILURE);
-	//ft_is_map_playable(dt, dt->pl.pos.x, dt->pl.pos.y, &is_playable);
+	if (ft_is_map_playable(dt, map_x, map_y))
+		return (STOP_FAILURE);
 	return (CONTINUE_SUCCESS);
 }

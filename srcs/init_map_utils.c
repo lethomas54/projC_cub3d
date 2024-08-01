@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:28:50 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/01 11:54:00 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:28:57 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ void	*ft_realloc(void *ptr, size_t size, int free_ptr)
 			new = malloc(size);
 			if (!new)
 				return (NULL);
+			ft_memset(new, 2, size);
 			ft_memcpy(new, ptr, ft_strlen((char *)ptr));
 			if (free_ptr)
 				free(ptr);
 		}
 		else
-		{
 			new = ptr;
-		}
 	}
 	return (new);
 }
@@ -73,7 +72,7 @@ int	ft_normalize_map(t_list *map, int map_len)
 		i = -1;
 		while (++i < map_len - 1)
 		{
-			if (line[i] != '0' && line[i] != '1' && line[i] != '\0'
+			if (line[i] != '0' && line[i] != '1'
 				&& line[i] != 'N' && line[i] != 'S' && line[i] != 'E'
 				&& line[i] != 'W')
 				line[i] = '2';

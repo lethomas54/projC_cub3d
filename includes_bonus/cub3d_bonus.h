@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/22 13:57:45 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:35:23 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,6 @@ void		ft_skip_whitespaces(int fd, char **line);
 int			get_texture_image(t_img *img, t_data *dt, char *path);
 void		set_img_to_null(t_data *dt);
 int			line_is_cringe(char *line);
+int			ft_is_map_playable(t_data *dt, int map_x, int map_y);
 
 #endif

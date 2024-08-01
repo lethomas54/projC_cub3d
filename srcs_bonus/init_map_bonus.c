@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:07:17 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/22 10:04:50 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:35:46 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ int	init_map_and_player(t_data *dt, int fd)
 		return (ft_lstclear(&map, free), STOP_FAILURE);
 	dt->map = ft_list_to_matrix(map, map_x, map_y);
 	if (!dt->map)
+		return (STOP_FAILURE);
+	if (ft_is_map_playable(dt, map_x, map_y))
 		return (STOP_FAILURE);
 	return (CONTINUE_SUCCESS);
 }

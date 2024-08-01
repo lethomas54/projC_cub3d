@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:28:50 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/22 10:09:28 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:36:22 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ void	*ft_realloc(void *ptr, size_t size, int free_ptr)
 			new = malloc(size);
 			if (!new)
 				return (NULL);
+			ft_memset(new, 2, size);
 			ft_memcpy(new, ptr, ft_strlen((char *)ptr));
 			if (free_ptr)
 				free(ptr);
 		}
 		else
-		{
 			new = ptr;
-		}
 	}
 	return (new);
 }

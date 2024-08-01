@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/22 09:50:12 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:40:05 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 
 # define FOV_X 1.57
 # define FOV_Y 1.57
-//adater les FOV entre eux selon le rapport entre les cotes de la fenetre ?
 
 # define PLAYER_HEIGHT 1.0
 # define WALL_HEIGHT 2.0 //doit etre strictement superieur a la taille du joueur
@@ -136,5 +135,6 @@ void		ft_skip_whitespaces(int fd, char **line);
 void		set_img_to_null(t_data *dt);
 int			get_rgb_from_line(char *line);
 int			line_is_cringe(char *line);
+int			ft_is_map_playable(t_data *dt, int map_x, int map_y);
 
 #endif

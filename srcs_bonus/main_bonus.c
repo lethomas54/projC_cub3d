@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:34:11 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/22 09:57:59 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:40:15 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static int	set_event_hook(t_data *dt)
 	mlx_loop_hook(dt->mlx.ptr, &loop_routine, dt);
 	return (CONTINUE_SUCCESS);
 }
-//check failure auto_repeat_on
 
 static int	init_data(t_data *dt, char *file_path)
 {
@@ -79,4 +78,3 @@ int	main(int argc, char **argv)
 	mlx_loop(dt.mlx.ptr);
 	return (EXIT_SUCCESS);
 }
-//verifier le retour mlx_loop

@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:11:53 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/17 11:24:12 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:40:23 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static int	get_spritesheet_nb(char *dir_path, int *sheet_nb)
 		return (ft_putendl_fd("Error empty spritesheet", 2), STOP_FAILURE);
 	return (errno != 0);
 }
-//verifier directement si commence par un . (pour eliminer les fichiers caches)
 
 static int	open_xpm_file(void *mlx_ptr, t_img *img, char *path)
 {

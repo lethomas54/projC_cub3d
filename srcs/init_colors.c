@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:06:46 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/22 09:50:48 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:34:04 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,35 @@ int	line_is_cringe(char *line)
 			&& line[i] != 'N' && line[i] != 'S' && line[i] != 'E'
 			&& line[i] != 'W' && line[i] != ' ' && line[i] != '\n')
 			return (STOP_FAILURE);
+	}
+	return (CONTINUE_SUCCESS);
+}
+
+int	ft_is_map_playable(t_data *dt, int map_x, int map_y)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < map_y)
+	{
+		j = -1;
+		while (++j < map_x - 1)
+		{
+			if (dt->map[i][j] == 0)
+			{
+				if ((i < 1 || i >= map_y) || (j < 1 || j >= map_x))
+					return (STOP_FAILURE);
+				if (dt->map[i + 1][j] != 0 && dt->map[i + 1][j] != 1)
+					return (STOP_FAILURE);
+				if (dt->map[i - 1][j] != 0 && dt->map[i - 1][j] != 1)
+					return (STOP_FAILURE);
+				if (dt->map[i][j + 1] != 0 && dt->map[i][j + 1] != 1)
+					return (STOP_FAILURE);
+				if (dt->map[i][j - 1] != 0 && dt->map[i][j - 1] != 1)
+					return (STOP_FAILURE);
+			}
+		}
 	}
 	return (CONTINUE_SUCCESS);
 }

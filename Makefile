@@ -10,7 +10,7 @@ NAME_BONUS	:= cub3d_bonus
 ########################################################################################
 
 COMP		:=	cc
-CFLAGS		:=	-g -fsanitize=address -Wall -Wextra -Werror
+CFLAGS		:=	-g -Wall -Wextra -Werror
 
 ########################################################################################
 #------------------------------SOURCE+OBJECT_FILE--------------------------------------#
@@ -28,7 +28,8 @@ SRC_BONUS	:=	main_bonus.c draw_floor_ceiling_bonus.c draw_on_screen_bonus.c \
 				exit_bonus.c fill_wall_col_with_texture_bonus.c get_time_bonus.c \
 				get_wall_distance_bonus.c set_sprite_bonus.c update_player_data_bonus.c \
 				update_spritesheet_index_bonus.c vec_operation_bonus.c \
-				init_data_bonus.c init_colors_bonus.c init_map_bonus.c init_map_utils_bonus.c
+				init_data_bonus.c init_colors_bonus.c init_map_bonus.c init_map_utils_bonus.c \
+				init_map_playable_bonus.c
 
 SRCS_BONUS	:= $(addprefix ./srcs_bonus/, $(SRC_BONUS))
 OBJ_BONUS 	:= $(SRCS_BONUS:.c=.o)
