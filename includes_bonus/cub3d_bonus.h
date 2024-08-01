@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/22 10:09:08 by npremont         ###   ########.fr       */
+/*   Updated: 2024/07/22 13:57:45 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 # define PLAYER_DIR_X 0
 # define PLAYER_DIR_Y 1
 
-# define FOV_X 1.57
-# define FOV_Y 1.57
+# define FOV_X 2
+# define FOV_Y 2
 
 # define PLAYER_HEIGHT 1.0
 # define WALL_HEIGHT 2.0
