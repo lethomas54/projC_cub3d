@@ -49,8 +49,8 @@ void	draw_on_screen(t_data dt)
 	t_vector	ray;
 
 	i = 0;
-	cam = vec_assignation(-dt.pl.dir.y * tan(FOV_X * 0.5),
-			dt.pl.dir.x * tan(FOV_X * 0.5));
+	cam = vec_assignation(dt.pl.dir.y * tan(FOV_X * 0.5),
+			-dt.pl.dir.x * tan(FOV_X * 0.5));
 	cam_step = vec_assignation(cam.x * 2.0 / (WIN_SIZE_X - 1),
 			cam.y * 2.0 / (WIN_SIZE_X - 1));
 	while (i < WIN_SIZE_X)
