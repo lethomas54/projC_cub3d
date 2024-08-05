@@ -75,7 +75,7 @@ $(NAME): $(LIBNAME) $(OBJ)
 
 $(NAME_BONUS): $(LIBNAME) $(OBJ_BONUS)
 	@$(COMP) $(CFLAGS) $(OBJ_BONUS) -o $@ -L $(LIBPATH) -lft -lmlx -lm -framework OpenGL -framework AppKit
-	@echo "$(BLUE_BOLD)$(NAME) compilation: $(GREEN)OK$(WHITE)"
+	@echo "$(BLUE_BOLD)$(NAME_BONUS) compilation: $(GREEN)OK$(WHITE)"
 
 $(LIBNAME):
 	@make -C $(LIBPATH) all

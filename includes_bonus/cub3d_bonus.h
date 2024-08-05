@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
-# include "../mlx/mlx.h"
+# include <mlx.h>
 # include <pthread.h>
 # include <sys/time.h>
 # include <dirent.h>

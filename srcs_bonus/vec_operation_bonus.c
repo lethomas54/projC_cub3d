@@ -35,7 +35,7 @@ t_vector	vec_rotate(t_vector vec_to_rot, double rot_step)
 {
 	t_vector	rot_vec;
 
-	rot_vec.x = vec_to_rot.x * cos(rot_step) - vec_to_rot.y * sin(rot_step);
-	rot_vec.y = vec_to_rot.x * sin(rot_step) + vec_to_rot.y * cos(rot_step);
+	rot_vec.x = vec_to_rot.x * cos(rot_step) + vec_to_rot.y * sin(rot_step);
+	rot_vec.y = -vec_to_rot.x * sin(rot_step) + vec_to_rot.y * cos(rot_step);
 	return (rot_vec);
 }

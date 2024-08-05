@@ -53,8 +53,8 @@ static void	set_new_pos(t_data *dt, t_bool move_along_dir, int dir_sign)
 		m_vec = vec_assignation(dir_sign * dt->pl.dir.x,
 				dir_sign * dt->pl.dir.y);
 	else
-		m_vec = vec_assignation(-dir_sign * dt->pl.dir.y,
-				dir_sign * dt->pl.dir.x);
+		m_vec = vec_assignation(dir_sign * dt->pl.dir.y,
+				-dir_sign * dt->pl.dir.x);
 	wall_dist = get_wall_distance(*dt, m_vec, &wall_dir);
 	hit_box_along
 		= HIT_BOX / (m_vec.x * ((wall_dir == NORTH) - (wall_dir == SOUTH))

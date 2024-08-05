@@ -23,8 +23,8 @@ static void	set_new_pos(t_data *dt)
 	if (dt->move.paral == 0 && dt->move.perp == 0)
 		return ;
 	m_vec = vec_assignation(dt->move.paral * dt->pl.dir.x
-			- dt->move.perp * dt->pl.dir.y,
-			dt->move.paral * dt->pl.dir.y + dt->move.perp * dt->pl.dir.x);
+			+ dt->move.perp * dt->pl.dir.y,
+			dt->move.paral * dt->pl.dir.y - dt->move.perp * dt->pl.dir.x);
 	m_vec = vec_normalization(m_vec);
 	wall_dist = get_wall_distance(*dt, m_vec, &wall_dir);
 	hit_box_along

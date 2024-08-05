@@ -53,10 +53,10 @@ void	draw_floor_ceiling(t_data dt, int start_line, int end_line)
 	t_vector	cam_step;
 	t_vector	ray;
 
-	ray = vec_assignation(dt.pl.dir.x + -dt.pl.dir.y * tan(FOV_X * 0.5),
-			dt.pl.dir.y + dt.pl.dir.x * tan(FOV_X * 0.5));
-	cam_step.x = -dt.pl.dir.y * tan(FOV_X * 0.5) * 2.0 / (WIN_SIZE_X - 1);
-	cam_step.y = dt.pl.dir.x * tan(FOV_X * 0.5) * 2.0 / (WIN_SIZE_X - 1);
+	ray = vec_assignation(dt.pl.dir.x + dt.pl.dir.y * tan(FOV_X * 0.5),
+			dt.pl.dir.y - dt.pl.dir.x * tan(FOV_X * 0.5));
+	cam_step.x = dt.pl.dir.y * tan(FOV_X * 0.5) * 2.0 / (WIN_SIZE_X - 1);
+	cam_step.y = -dt.pl.dir.x * tan(FOV_X * 0.5) * 2.0 / (WIN_SIZE_X - 1);
 	while (start_line < end_line)
 	{
 		floor_dist = dt.pl.height * (WIN_SIZE_Y - 1) * 0.5

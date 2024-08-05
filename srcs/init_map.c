@@ -48,13 +48,13 @@ int	ft_replace_player(char *c, double x, double y, t_data *dt)
 		return (STOP_FAILURE);
 	dt->pl.pos = vec_assignation(x + 0.5, y + 0.5);
 	if ((*c) == 'N')
-		dt->pl.dir = vec_assignation(-1, 0);
-	if ((*c) == 'S')
-		dt->pl.dir = vec_assignation(1, 0);
-	if ((*c) == 'W')
-		dt->pl.dir = vec_assignation(0, 1);
-	if ((*c) == 'E')
 		dt->pl.dir = vec_assignation(0, -1);
+	if ((*c) == 'S')
+		dt->pl.dir = vec_assignation(0, 1);
+	if ((*c) == 'W')
+		dt->pl.dir = vec_assignation(-1, 0);
+	if ((*c) == 'E')
+		dt->pl.dir = vec_assignation(1, 0);
 	(*c) = '0';
 	return (CONTINUE_SUCCESS);
 }

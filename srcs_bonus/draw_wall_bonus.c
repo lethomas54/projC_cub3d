@@ -90,8 +90,8 @@ void	draw_wall(t_data dt, int start_col, int end_col)
 	t_vector	ray;
 
 	i = start_col;
-	cam = vec_assignation(-dt.pl.dir.y * tan(FOV_X * 0.5),
-			dt.pl.dir.x * tan(FOV_X * 0.5));
+	cam = vec_assignation(dt.pl.dir.y * tan(FOV_X * 0.5),
+			-dt.pl.dir.x * tan(FOV_X * 0.5));
 	cam_step = vec_assignation(cam.x * 2.0 / (WIN_SIZE_X - 1),
 			cam.y * 2.0 / (WIN_SIZE_X - 1));
 	ray = vec_assignation(dt.pl.dir.x + cam.x - i * cam_step.x,
