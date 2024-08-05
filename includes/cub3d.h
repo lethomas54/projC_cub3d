@@ -31,7 +31,7 @@
 # define FOV_Y 1.57
 
 # define PLAYER_HEIGHT 1.0
-# define WALL_HEIGHT 2.0		//doit etre strictement superieur a la taille du joueur
+# define WALL_HEIGHT 2.0
 
 # define ROTATE_STEP 0.2
 # define TRANSLATION_STEP 0.1
