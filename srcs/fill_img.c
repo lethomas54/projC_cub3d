@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:37:41 by lethomas          #+#    #+#             */
-/*   Updated: 2024/08/01 15:01:22 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:57:36 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	set_pixel_nb(double wall_dist, int *floor_pix, int *wall_pix,
 static void	set_wall_img(t_texture tex, int wall_dir, t_img *wall_tex)
 {
 	if (wall_dir == NORTH)
-		*wall_tex = tex.north;
-	else if (wall_dir == EAST)
 		*wall_tex = tex.east;
+	else if (wall_dir == EAST)
+		*wall_tex = tex.north;
 	else if (wall_dir == SOUTH)
-		*wall_tex = tex.south;
-	else
 		*wall_tex = tex.west;
+	else
+		*wall_tex = tex.south;
 }
 
 static void	fill_with_color(int pixel_nb, int color, t_img *img)

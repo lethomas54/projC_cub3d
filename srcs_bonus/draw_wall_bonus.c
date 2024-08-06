@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wall_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:37:41 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/16 16:54:29 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:58:26 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ static void	fill_img(t_data dt, double wall_dist, int wall_dir,
 	t_img	wall_tex;
 
 	floor_pix = set_pixel_nb(wall_dist, wall_pix, &ceiling_pix, dt.pl.height);
-	if (wall_dir == NORTH)
-		wall_tex = dt.tex.north;
-	else if (wall_dir == EAST)
+		if (wall_dir == NORTH)
 		wall_tex = dt.tex.east;
+	else if (wall_dir == EAST)
+		wall_tex = dt.tex.north;
 	else if (wall_dir == SOUTH)
-		wall_tex = dt.tex.south;
-	else
 		wall_tex = dt.tex.west;
+	else
+		wall_tex = dt.tex.south;
 	dt.mlx.img.addr += ceiling_pix * dt.mlx.img.line_len;
 	fill_wall_col_with_texture(wall_pix, wall_tex, corner_dist,
 		&dt);

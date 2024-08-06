@@ -1,7 +1,7 @@
 NO ./texture/bluelined_tile.xpm
-SO ./texture/bluelined_tile.xpm
-WE ./texture/bluelined_tile.xpm
-EA ./texture/bluelined_tile.xpm
+SO ./texture/bookshelf.xpm
+WE ./texture/hex_tile.xpm
+EA ./texture/rect_tile.xpm
 
 F ./texture/hex_tile.xpm
 C ./texture/hex_tile.xpm
