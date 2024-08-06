@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:09:27 by lethomas          #+#    #+#             */
-/*   Updated: 2024/08/01 14:35:23 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:14:59 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_player
 {
 	t_vector	pos;
 	t_vector	dir;
+	t_bool		found;
 	double		height;
 	t_bool		has_shot;
 }	t_player;

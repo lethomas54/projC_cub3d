@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_colors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:06:46 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/06 12:30:28 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:10:06 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	ft_is_map_playable(t_data *dt, int map_x, int map_y)
 		{
 			if (dt->map[i][j] == 0)
 			{
-				if ((i < 1 || i >= map_y) || (j < 1 || j >= map_x))
+				if ((i < 1 || i + 1 >= map_y) || (j < 1 || j + 1 >= map_x))
 					return (STOP_FAILURE);
 				if (dt->map[i + 1][j] != 0 && dt->map[i + 1][j] != 1)
 					return (STOP_FAILURE);

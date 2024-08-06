@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
+/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:07:17 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/01 15:18:05 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:13:39 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,20 @@ int	ft_init_player(t_list *map, t_data *dt)
 		str = (char *)map->content;
 		i = -1;
 		while (str[++i])
+		{
 			if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E'
 				|| str[i] == 'W')
+			{
+				dt->pl.found = true;
 				if (ft_replace_player(&str[i], i, y, dt))
 					return (STOP_FAILURE);
+			}
+		}
 		++y;
 		map = map->next;
 	}
+	if (dt->pl.found == false)
+		return (STOP_FAILURE);
 	return (CONTINUE_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:34:51 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/01 14:35:04 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:15:29 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_is_map_playable(t_data *dt, int map_x, int map_y)
 		{
 			if (dt->map[i][j] == 0)
 			{
-				if ((i < 1 || i >= map_y) || (j < 1 || j >= map_x))
+				if ((i < 1 || i + 1 >= map_y) || (j < 1 || j + 1 >= map_x))
 					return (STOP_FAILURE);
 				if (dt->map[i + 1][j] != 0 && dt->map[i + 1][j] != 1)
 					return (STOP_FAILURE);
