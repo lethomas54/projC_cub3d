@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:34:11 by lethomas          #+#    #+#             */
-/*   Updated: 2024/08/06 13:11:41 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:15:17 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int argc, char **argv)
 	if (set_event_hook(&dt))
 		(ft_putendl_fd("hook setting failure", 2), exit(EXIT_FAILURE));
 	if (init_data(&dt, argv[1]))
-		(system("Leaks cub3D_bonus"), exit(EXIT_FAILURE));
+		exit(EXIT_FAILURE);
 	if (set_sprite(&dt))
 		exit(EXIT_FAILURE);
 	mlx_loop(dt.mlx.ptr);
