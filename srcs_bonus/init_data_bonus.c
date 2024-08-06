@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:38:24 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/22 13:11:55 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:45:17 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ static int	init_textures_ptr(t_data *dt, int fd)
 	if (line)
 	{
 		if (is_valid_line(line))
-			return (STOP_FAILURE);
+			return (free(line), STOP_FAILURE);
 		if (fill_textures_ptr_and_colors(line, dt))
-			return (STOP_FAILURE);
+			return (free(line), STOP_FAILURE);
 		free(line);
 		if (!(dt->tex.north.ptr) || !(dt->tex.south.ptr)
 			|| !(dt->tex.west.ptr) || !(dt->tex.east.ptr)

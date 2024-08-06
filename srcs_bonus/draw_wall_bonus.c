@@ -6,7 +6,7 @@
 /*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:37:41 by lethomas          #+#    #+#             */
-/*   Updated: 2024/08/06 11:58:26 by lethomas         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:31:39 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	fill_img(t_data dt, double wall_dist, int wall_dir,
 	t_img	wall_tex;
 
 	floor_pix = set_pixel_nb(wall_dist, wall_pix, &ceiling_pix, dt.pl.height);
-		if (wall_dir == NORTH)
+	if (wall_dir == NORTH)
 		wall_tex = dt.tex.east;
 	else if (wall_dir == EAST)
 		wall_tex = dt.tex.north;

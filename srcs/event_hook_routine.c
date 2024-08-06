@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_hook_routine.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:11:49 by lethomas          #+#    #+#             */
-/*   Updated: 2024/07/22 09:47:35 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:47:52 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_tab(int **tab)
 	free(tab);
 }
 
-static void	destroy_texture(void *mlx_ptr, t_texture texture)
+void	destroy_texture(void *mlx_ptr, t_texture texture)
 {
 	mlx_destroy_image(mlx_ptr, texture.north.ptr);
 	mlx_destroy_image(mlx_ptr, texture.east.ptr);

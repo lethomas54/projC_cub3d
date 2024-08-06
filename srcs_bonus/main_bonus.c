@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 17:34:11 by lethomas          #+#    #+#             */
-/*   Updated: 2024/08/01 14:40:15 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:08:01 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_putendl_fd("wrong number of argument", 2), EXIT_FAILURE);
 	if (init_mlx(&dt.mlx))
-		return (ft_putendl_fd("mlx initiation failure", 2), EXIT_FAILURE);
+		(ft_putendl_fd("mlx initiation failure", 2),  exit(EXIT_FAILURE));
 	if (set_event_hook(&dt))
-		return (ft_putendl_fd("hook setting failure", 2), EXIT_FAILURE);
+		(ft_putendl_fd("hook setting failure", 2),  exit(EXIT_FAILURE));
 	if (init_data(&dt, argv[1]))
-		return (EXIT_FAILURE);
+		(system("Leaks cub3D_bonus"), exit(EXIT_FAILURE));
 	if (set_sprite(&dt))
-		return (STOP_FAILURE);
+		exit(EXIT_FAILURE);
 	mlx_loop(dt.mlx.ptr);
 	return (EXIT_SUCCESS);
 }

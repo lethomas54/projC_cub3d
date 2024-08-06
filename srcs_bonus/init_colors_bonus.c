@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_colors_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:06:46 by npremont          #+#    #+#             */
-/*   Updated: 2024/07/22 13:11:59 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:32:00 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_free_split(char **split)
 char	*get_next_true_line(int fd, t_bool trim)
 {
 	char	*line;
+	char	*line_trimmed;
 	char	*new_line;
 
 	while (1)
@@ -67,9 +68,12 @@ char	*get_next_true_line(int fd, t_bool trim)
 		{
 			if (trim)
 			{
+				line_trimmed = ft_strtrim(line, " \t\v");
+				free(line);
 				new_line = ft_strrchr(line, '\n');
 				if (new_line)
 					*new_line = '\0';
+				return (line_trimmed);
 			}
 			return (line);
 		}
