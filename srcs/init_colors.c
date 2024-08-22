@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_colors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:06:46 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/06 16:10:06 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:14:32 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	ft_is_map_playable(t_data *dt, int map_x, int map_y)
 	while (++i < map_y)
 	{
 		j = -1;
-		while (++j < map_x - 1)
+		while (++j < map_x)
 		{
 			if (dt->map[i][j] == 0)
 			{

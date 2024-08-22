@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:07:17 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/22 11:46:04 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:16:49 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	**ft_list_to_matrix(t_list *map, int map_x, int map_y)
 	i = -1;
 	while (map)
 	{
-		res[++i] = (int *)malloc((map_x - 1) * sizeof(int));
+		res[++i] = (int *)malloc((map_x) * sizeof(int));
 		if (res[i] == NULL)
 			return (ft_lstclear(&map, free), free(res), NULL);
 		str = (char *)map->content;

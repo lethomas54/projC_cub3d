@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map_playable_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:34:51 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/06 16:15:29 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:28:15 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_is_map_playable(t_data *dt, int map_x, int map_y)
 	while (++i < map_y)
 	{
 		j = -1;
-		while (++j < map_x - 1)
+		while (++j < map_x)
 		{
 			if (dt->map[i][j] == 0)
 			{

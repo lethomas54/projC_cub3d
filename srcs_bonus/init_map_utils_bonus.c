@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map_utils_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
+/*   By: lethomas <lethomas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:28:50 by npremont          #+#    #+#             */
-/*   Updated: 2024/08/01 14:36:22 by npremont         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:28:45 by lethomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ int	ft_normalize_map(t_list *map, int map_len)
 	y = 0;
 	while (map)
 	{
-		map->content = ft_realloc(map->content, map_len, 1);
+		map->content = ft_realloc(map->content, map_len + 1, 1);
 		if (!map->content)
 			return (STOP_FAILURE);
 		line = (char *)map->content;
 		i = -1;
-		while (++i < map_len - 1)
+		while (++i < map_len)
 		{
 			if (line[i] != '0' && line[i] != '1' && line[i] != '\0'
 				&& line[i] != 'N' && line[i] != 'S' && line[i] != 'E'

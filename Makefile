@@ -92,12 +92,12 @@ bonus_clean:
 
 fclean:
 	@make -C $(LIBPATH) fclean
-	@rm -f $(OBJ) $(NAME)
+	@rm -f $(OBJ) $(DEPS) $(NAME)
 	@echo "$(RED_BOLD)$(NAME) fclean: $(GREEN)OK$(WHITE)"
 
 bonus_fclean:
 	@make -C $(LIBPATH) fclean
-	@rm -f $(OBJ_BONUS) $(NAME_BONUS)
+	@rm -f $(OBJ_BONUS) $(DEPS_BONUS) $(NAME_BONUS)
 	@echo "$(RED_BOLD)$(NAME_BONUS) fclean: $(GREEN)OK$(WHITE)"
 
 bonus_re: bonus_fclean bonus
