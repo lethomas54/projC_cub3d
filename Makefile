@@ -20,8 +20,9 @@ SRC			:=	main.c draw_on_screen.c get_wall_distance.c fill_img.c \
 				fill_with_texture.c event_hook_routine.c vector_utils.c \
 				init_data.c init_colors.c init_map.c init_map_utils.c
 
-SRCS		:= $(addprefix ./srcs/, $(SRC))
-OBJ 		:= $(SRCS:.c=.o)
+SRCS		:=	$(addprefix ./srcs/, $(SRC))
+OBJ 		:=	$(SRCS:.c=.o)
+DEPS		:=	$(SRCS:.c=.d)
 
 SRC_BONUS	:=	main_bonus.c draw_floor_ceiling_bonus.c draw_on_screen_bonus.c \
 				draw_wall_bonus.c draw_weapon_bonus.c event_hook_routine_bonus.c \
@@ -31,18 +32,9 @@ SRC_BONUS	:=	main_bonus.c draw_floor_ceiling_bonus.c draw_on_screen_bonus.c \
 				vec_operation_bonus.c init_data_bonus.c init_colors_bonus.c \
 				init_map_bonus.c init_map_utils_bonus.c init_map_playable_bonus.c
 
-SRCS_BONUS	:= $(addprefix ./srcs_bonus/, $(SRC_BONUS))
-OBJ_BONUS 	:= $(SRCS_BONUS:.c=.o)
-
-########################################################################################
-#---------------------------------HEADER_FILE------------------------------------------#
-########################################################################################
-
-INC			:= cub3d.h
-INCS		:= $(addprefix ./includes/, $(INC))
-
-INC_BONUS	:= cub3d_bonus.h
-INCS_BONUS	:= $(addprefix ./includes_bonus/, $(INC_BONUS))
+SRCS_BONUS	:=	$(addprefix ./srcs_bonus/, $(SRC_BONUS))
+OBJ_BONUS 	:=	$(SRCS_BONUS:.c=.o)
+DEPS_BONUS	:=	$(SRCS_BONUS:.c=.d)
 
 ########################################################################################
 #-----------------------------------LIB_VAR--------------------------------------------#
@@ -80,20 +72,22 @@ $(NAME_BONUS): $(LIBNAME) $(OBJ_BONUS)
 $(LIBNAME):
 	@make -C $(LIBPATH) all
 
-$(OBJ): %.o: %.c $(INCS)
-	@$(COMP) $(CFLAGS) -c $< -o $@
+-include $(DEPS)
+$(OBJ): %.o: %.c
+	@$(COMP) $(CFLAGS) -MMD -MP -c $< -o $@
 
-$(OBJ_BONUS): %.o: %.c $(INCS_BONUS)
-	@$(COMP) $(CFLAGS) -c $< -o $@
+-include $(DEPS_BONUS)
+$(OBJ_BONUS): %.o: %.c
+	@$(COMP) $(CFLAGS) -MMD -MP -c $< -o $@
 
 clean:
 	@make -C $(LIBPATH) clean
-	@rm -f $(OBJ)
+	@rm -f $(OBJ) $(DEPS)
 	@echo "$(RED_BOLD)$(NAME) clean: $(GREEN)OK$(WHITE)"
 
 bonus_clean:
 	@make -C $(LIBPATH) clean
-	@rm -f $(OBJ_BONUS)
+	@rm -f $(OBJ_BONUS) $(DEPS_BONUS)
 	@echo "$(RED_BOLD)$(NAME_BONUS) clean: $(GREEN)OK$(WHITE)"
 
 fclean:
